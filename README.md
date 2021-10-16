@@ -23,5 +23,4 @@ Install it [here](https://python.org).
 
 Also note that SDL 2 comes bundled with pygame.
 
-For best experience, optional:
-- Pyzo (`pip3 install pyzo`)
+
