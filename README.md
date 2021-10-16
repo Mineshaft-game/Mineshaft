@@ -19,8 +19,7 @@ It also depends on:
 
 To install the dependency libraries, run `pip install pygame pygame-menu screeninfo`.
 
-Install it [here](https://python.org).
 
-Also note that SDL 2 comes bundled with pygame.
+Note that SDL 2 comes bundled with pygame.
 
 
