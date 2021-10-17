@@ -1,6 +1,9 @@
 [submodule "render/rendermite"]
 	path = render/rendermite
-	url = git@github.com:Mineshaft-game/rendermite
+	url = https://github.com/Mineshaft-game/RenderMite
 [submodule "assets"]
 	path = assets
 	url = https://github.com/Mineshaft-game/assets
+[submodule "gen"]
+	path = gen
+	url = https://github.com/Mineshaft-game/gen1121
