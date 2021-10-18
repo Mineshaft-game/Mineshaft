@@ -17,13 +17,14 @@ class Mineshaft(object):
         self.panorama_x_direction = random.randint(0,1)
         self.panorama_y_direction = random.randint(0,1)
         self.panorama_direction = random.randint(0,1)
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED | pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
         self._menu_init(WIDTH, HEIGHT)
-        MENU1.play(-1)
+        #MENU1.play(-1)
 
 
     def _pygame_init(self):
+        os.environ["SDL_VIDEO_CENTERED"] = '1'
         pygame.init()
         pygame.display.set_caption("Mineshaft","Mineshaft")
         pygame.display.set_icon(pygame.image.load(os.path.join("assets","textures","blocks","Grass.png")))
