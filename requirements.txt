@@ -1,4 +1,4 @@
 pygame>=2.0.1
 pygame-menu
 screeninfo
-libmineshaft
+libmineshaft>=0.1.1
