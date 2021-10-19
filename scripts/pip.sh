@@ -1,10 +1,10 @@
 #!/bin/bash
-echo "creating directories"
+echo "Creating directories"
 mkdir build
 mkdir build/mineshaft2d
-echo "installing requirements"
+echo "Installing requirements"
 pip3 install -r requirements.txt
-echo "copying files and directories"
+echo "Copying files and directories"
 cp main.py build/mineshaft2d/__main__.py
 cp -r assets build/mineshaft2d/
 cp -r render build/mineshaft2d/
@@ -14,14 +14,14 @@ cp -r gen build/mineshaft2d/
 cp buildtools/setup.py build/setup.py
 cp README.md build/README.md
 cp LICENSE build/LICENSE
-echo "going into build"
+echo "Going into build"
 cd build
-echo "setup.py check"
+echo "----------Setup.py check----------"
 python3 setup.py check
-echo "Source distribution"
+echo "----------Source distribution----------"
 python3 setup.py sdist
-echo "installing wheel"
+echo "\n\n\n\nInstalling wheel\n\n\n\n"
 pip3 install wheel
-echo "Wheel distribution"
+echo "----------Wheel distribution----------"
 python3 setup.py bdist_wheel
-echo "done"
+echo "\n\n\n\n\n\ndone"
