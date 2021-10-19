@@ -3,10 +3,10 @@ import screeninfo
 import os
 import random
 import pygame_menu
-from resources.colors import *
-from resources.constants import *
-from resources.themes import *
-from resources.music import *
+from libmineshaft.colors import *
+from libmineshaft.constants import *
+from libmineshaft.themes import *
+from libmineshaft.music import *
 
 
 
