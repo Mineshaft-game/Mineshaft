@@ -77,13 +77,13 @@ class Mineshaft(object):
         for event in pygame.event.get():
             if event.type == pygame.VIDEORESIZE:
                 self.screen = pygame.display.set_mode((event.w, event.h), pygame.RESIZABLE)
-                self._menu_init(event.w, event.h)
-                continue
             elif event.type==pygame.QUIT:
                 sys.exit(pygame.quit())
 
 
         if self.menu.is_enabled():
+            window_size = self.screen.get_size()
+            self.menu.resize(window_size[0],  window_size[1])
             self.currentpanoramapos = self._update_panorama(self.currentpanoramapos)
             self.menu.update(events)
 
