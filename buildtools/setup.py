@@ -18,7 +18,7 @@ setup(
     install_requires=[
                       'pygame>=2.0.1',
                       'screeninfo',
-                      'libmineshaft',
+                      'libmineshaft>=0.1.2',
                       'pygame-menu'
                       ],
 
