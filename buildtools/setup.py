@@ -19,7 +19,7 @@ setup(
                       'pygame>=2.0.1',
                       'screeninfo',
                       'libmineshaft>=0.1.2',
-                      'pygame-menu'
+                      'pygame-menu>=4.1.5'
                       ],
 
     classifiers=[
