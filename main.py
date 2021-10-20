@@ -9,7 +9,7 @@ from libmineshaft.themes import *
 from libmineshaft.music import *
 
 
-class Mineshaft(object):
+class Mineshaft:
     def __init__(self):
         self._pygame_init()
         self.currentpanoramapos = [
