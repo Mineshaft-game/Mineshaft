@@ -38,7 +38,7 @@ class Mineshaft:
             "", width-100, height-100, theme=MINESHAFT_DEFAULT_THEME)
         self.menu.add.button('Start Game',  self.menu.toggle)
         self.menu.add.button('Quit', pygame_menu.events.EXIT)
-        
+
         # unused right now
         # monitor = screeninfo.get_monitors()[0]
 
