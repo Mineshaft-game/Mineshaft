@@ -1,6 +1,7 @@
 import pygame
 import screeninfo
 import os
+import sys
 import random
 import pygame_menu
 from libmineshaft.colors import *
@@ -37,8 +38,9 @@ class Mineshaft:
             "", width-100, height-100, theme=MINESHAFT_DEFAULT_THEME)
         self.menu.add.button('Start Game',  self.menu.toggle)
         self.menu.add.button('Quit', pygame_menu.events.EXIT)
-
-        #monitor = screeninfo.get_monitors()[0]
+        
+        # unused right now
+        # monitor = screeninfo.get_monitors()[0]
 
         self.menu.background = pygame.image.load(os.path.join(
             os.path.abspath(os.getcwd()), "assets", "panorama.jpeg"))
