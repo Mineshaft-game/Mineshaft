@@ -16,11 +16,11 @@ setup(
     long_description_content_type="text/markdown",
     packages=['mineshaft2d'],
     install_requires=[
-                      'pygame>=2.0.1',
-                      'screeninfo',
-                      'libmineshaft>=0.1.2',
-                      'pygame-menu>=4.1.5'
-                      ],
+        'pygame>=2.0.1',
+        'screeninfo',
+        'libmineshaft>=0.1.2',
+        'pygame-menu>=4.1.5'
+    ],
 
     classifiers=[
         'Development Status :: 1 - Planning',
