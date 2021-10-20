@@ -23,7 +23,8 @@ class Mineshaft(object):
         self._menu_init(WIDTH, HEIGHT)
         # MENU1.play(-1)
 
-    def _pygame_init(self):
+    @staticmethod
+    def _pygame_init():
         os.environ["SDL_VIDEO_CENTERED"] = '1'
         pygame.init()
         pygame.display.set_caption("Mineshaft", "Mineshaft")
