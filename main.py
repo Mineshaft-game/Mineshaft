@@ -1,5 +1,5 @@
 import pygame
-#import screeninfo # Temporarily unused
+# import screeninfo # Temporarily unused
 import os
 import sys
 import random
@@ -11,7 +11,6 @@ from libmineshaft.themes import *
 from libmineshaft.music import *
 
 _ = lang.get
-
 
 
 class Mineshaft:
@@ -37,7 +36,7 @@ class Mineshaft:
         pygame.display.set_icon(pygame.image.load(
             os.path.join("assets", "textures", "blocks", "Grass.png")))
         pygame.mouse.set_visible(False)
-        
+
     def _lang_init(self):
         lang.add(os.path.join("lang",  "en.xml"))
         lang.add(os.path.join("lang",  "ru.xml"))
