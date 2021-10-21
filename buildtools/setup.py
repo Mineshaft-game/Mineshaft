@@ -25,10 +25,10 @@ setup(
 
     classifiers=[
         'License :: Other/Proprietary License',
-        'Topic :: Software Developement :: Libraries :: pygame'
+        'Topic :: Software Developement :: Libraries :: pygame',
         'Development Status :: 1 - Planning',
         'Programming Language :: Python :: 3',
-        'Topic :: Games/Entertainement'
+        'Topic :: Games/Entertainement',
         'Topic :: Games/Entertainement :: Simulation',
         'Intended Audience :: Developers',
         'Intended Audience :: End Users/Desktop',
