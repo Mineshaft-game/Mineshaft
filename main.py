@@ -1,17 +1,22 @@
 import pygame
-import screeninfo
+#import screeninfo # Temporarily unused
 import os
 import sys
 import random
+import python_lang as lang
 import pygame_menu
 from libmineshaft.colors import *
 from libmineshaft.constants import *
 from libmineshaft.themes import *
 from libmineshaft.music import *
 
+_ = lang.get
+
+
 
 class Mineshaft:
     def __init__(self):
+        self._lang_init()
         self._pygame_init()
         self.currentpanoramapos = [
             random.randint(-1000, 0), random.randint(-500, 0)]
@@ -28,16 +33,20 @@ class Mineshaft:
     def _pygame_init():
         os.environ["SDL_VIDEO_CENTERED"] = '1'
         pygame.init()
-        pygame.display.set_caption("Mineshaft", "Mineshaft")
+        pygame.display.set_caption(_("Mineshaft"),  _("Mineshaft"))
         pygame.display.set_icon(pygame.image.load(
             os.path.join("assets", "textures", "blocks", "Grass.png")))
         pygame.mouse.set_visible(False)
+        
+    def _lang_init(self):
+        lang.add(os.path.join("lang",  "en.xml"))
+        lang.select("en")
 
     def _menu_init(self, width, height):
         self.menu = pygame_menu.Menu(
             "", width-100, height-100, theme=MINESHAFT_DEFAULT_THEME)
-        self.menu.add.button('Start Game',  self.menu.toggle)
-        self.menu.add.button('Quit', pygame_menu.events.EXIT)
+        self.menu.add.button(_('Start Game'),  self.menu.toggle)
+        self.menu.add.button(_('Quit'), pygame_menu.events.EXIT)
 
         # unused right now
         # monitor = screeninfo.get_monitors()[0]
