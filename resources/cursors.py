@@ -11,4 +11,4 @@ class Cursor:
 
 
 pwd = os.path.abspath(os.getcwd())
-DIAMOND_PICKAXE = Cursor(str(pwd)+"/images/DiamondPickaxe.png", 0, 0)
+DIAMOND_PICKAXE = Cursor(str(pwd) + "/images/DiamondPickaxe.png", 0, 0)
