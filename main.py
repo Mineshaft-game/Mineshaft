@@ -39,6 +39,7 @@ class Mineshaft:
 
     def _lang_init(self):
         lang.add(os.path.join("lang",  "en.xml"))
+        lang.add(os.path.join("lang",  "de.xml"))
         lang.add(os.path.join("lang",  "ru.xml"))
         lang.select("en")
 
