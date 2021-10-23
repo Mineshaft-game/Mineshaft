@@ -37,7 +37,8 @@ class Mineshaft:
             os.path.join("assets", "textures", "blocks", "Grass.png")))
         pygame.mouse.set_visible(False)
 
-    def _lang_init(self):
+    @staticmethod
+    def _lang_init():
         lang.add(os.path.join("lang",  "en.xml"))
         lang.add(os.path.join("lang",  "de.xml"))
         lang.add(os.path.join("lang",  "ru.xml"))
