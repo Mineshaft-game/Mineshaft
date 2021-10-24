@@ -9,10 +9,10 @@ import python_lang as lang #used for translations
 import pygame_menu #used for menu
 
 #these here are pretty self-explanatory
-from libmineshaft.colors import * #color constants
-from libmineshaft.constants import * #other general constants
-from libmineshaft.themes import * #menu themes
-from libmineshaft.music import * #music components
+from libmineshaft.colors import WHITE #color constants
+from libmineshaft.constants import WIDTH, HEIGHT #other general constants
+from libmineshaft.themes import MINESHAFT_DEFAULT_THEME #menu themes
+from libmineshaft.music import MENU1  #music components
 
 
 #translation function
