@@ -5,7 +5,7 @@
 
 # Mineshaft
 
-[![Pygame Powered!](https://github.com/pygame/pygame/blob/main/docs/pygame_powered.png)](https://pygame.org) 
+[![Pygame Powered!](https://github.com/pygame/pygame/blob/main/docs/pygame_powered.png)](https://pygame.org) [![Join the chat at https://gitter.im/Mineshaft-game/develop](https://badges.gitter.im/Mineshaft-game/develop.svg)](https://gitter.im/Mineshaft-game/develop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 
 ### Dependencies
 Mineshaft uses these open-source libraries:
