@@ -1,6 +1,6 @@
 name:Contributors-To-File
 
-on: [push]
+
 
 jobs:
   contributors_to_file:
@@ -20,3 +20,5 @@ jobs:
       with:
         title: "Update contributors"
         commit-message: "Update contributors"
+
+on: [push]
