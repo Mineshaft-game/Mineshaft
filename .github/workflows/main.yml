@@ -21,4 +21,6 @@ jobs:
         title: "Update contributors"
         commit-message: "Update contributors"
 
-on: [push]
+on:
+  schedule:
+    - cron: $cron-monthly
