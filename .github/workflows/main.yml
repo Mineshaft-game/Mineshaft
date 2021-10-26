@@ -1,5 +1,8 @@
 name:Main
 
+on:
+  schedule:
+    - cron: $cron-monthly
 
 
 jobs:
@@ -21,6 +24,3 @@ jobs:
         title: "Update contributors"
         commit-message: "Update contributors"
 
-on:
-  schedule:
-    - cron: $cron-monthly
