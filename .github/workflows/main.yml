@@ -1,9 +1,9 @@
-name:Contributors-To-File
+name:Main
 
 
 
 jobs:
-  contributors_to_file:
+   contributors_to_file:
     runs-on: ubuntu-latest
     name: Write contributors to file
     steps:
