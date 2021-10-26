@@ -14,7 +14,7 @@ jobs:
       id: update_contributors
       uses: TheLastProject/contributors-to-file-action@v2
       with:
-        file_in_repo: example/index.txt
+        file_in_repo: contributors.txt
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
