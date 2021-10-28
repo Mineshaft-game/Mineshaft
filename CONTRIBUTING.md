@@ -18,7 +18,9 @@ These have been converted into submodules:
 # Setting up the developement enivroment
 As always, clone the repository by any means, ssh, GCM core, normal clone,etc.
 
-```git clone https://github.com/Mineshaft-game/Mineshaft```
+```
+git clone https://github.com/Mineshaft-game/Mineshaft
+```
 
 after that, create a remote named `gitlab` using `git remote add gitlab https://gitlab.com/double-fractal/mineshaft2d/Mineshaft`
 
