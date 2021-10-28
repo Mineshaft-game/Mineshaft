@@ -5,18 +5,20 @@
 One of the core ideas of Mineshaft, is the replaceable modules.
 You can replace any piece of the Mineshaft modules with your own.Think of Mineshaft as a puzzle where you can replace pieces with different ones.
 The "puzzle" is split into these directories:
-- `core` is core components and classes
+- `api` is the directory to store the APIs for the game
+- `buildtools` are the various tools to make files like `.exe` or `.whl`
+- `scripts` are the scripts to do various stuffs. The documentation for them is available in the directory.
+- `lang` are the language files stored in `.xml` format.
+- `resources` used to have some files related to Mineshaft. This will be deprecated soon.
+
+These have been converted into submodules:
 - `render` is the rendering engine. The rendering engine manages how does the game get displayed. it also manages shading.
 - `gen` is the world generation engine.
-- `assets` are the assets like music, sounds, textures, and other stuff.
+- `assets` are the assets like music, sounds, textures, and other stuff. 
 # Setting up the developement enivroment
-As always, clone the repository by any means, ssh,GCM core, normal clone,etc.
+As always, clone the repository by any means, ssh, GCM core, normal clone,etc.
 
-
-
-`git clone https://github.com/Mineshaft-game/Mineshaft`
-
-
+```git clone https://github.com/Mineshaft-game/Mineshaft```
 
 after that, create a remote named `gitlab` using `git remote add gitlab https://gitlab.com/double-fractal/mineshaft2d/Mineshaft`
 
