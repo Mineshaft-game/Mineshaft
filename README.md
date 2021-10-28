@@ -13,7 +13,9 @@
 Mineshaft's primary dependencies are:
 - [Python 3.7+](https://python.org)
 - SDL 2
-- [lua 5.3+](https://lua.org) (for lua API)
+
+Optional:
+- [lua 5.3+](https://lua.org) if you want to use the lua API.
 
 Note that SDL 2 comes bundled with pygame and is ****not**** the `pysdl2` package.
 
@@ -24,6 +26,8 @@ Mineshaft uses these Python libraries:
 - [Screeninfo](https://pypi.org/project/screeninfo)
 - [libmineshaft](https://pypi.org/project/libmineshaft) 
 - [python-lang](https://pypi.org/project/python-lang)
+
+Optional:
 - [lupa](https://pypi.org/project/lupa) (for lua API)
 
 To install the dependency libraries, run `pip install -r requirements.txt`.
