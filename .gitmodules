@@ -7,3 +7,6 @@
 [submodule "gen"]
 	path = gen
 	url = https://github.com/Mineshaft-game/gen1121
+[submodule "render"]
+	path = render
+	url = https://github.com/Mineshaft-game/RenderMite

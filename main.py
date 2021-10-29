@@ -8,11 +8,12 @@ import random  # used for randomizing things
 import python_lang as lang  # used for translations
 import pygame_menu  # used for menu
 
+#rendering
+from render import Engine
 # these here are pretty self-explanatory
 from libmineshaft.colors import WHITE  # color constants
 from libmineshaft.constants import WIDTH, HEIGHT  # other general constants
 from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
-from libmineshaft.music import MENU1  # music components
 
 
 # translation function
