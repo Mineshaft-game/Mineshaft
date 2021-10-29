@@ -16,7 +16,8 @@ from libmineshaft.colors import WHITE  # color constants
 from libmineshaft.constants import WIDTH, HEIGHT  # other general constants
 from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
 
-
+# block index
+from index.blocks import BLOCKS
 # translation function
 _ = lang.get
 
@@ -53,6 +54,10 @@ class Mineshaft:
             pygame.image.load(os.path.join("assets", "textures", "blocks", "Grass.png"))
         )
         pygame.mouse.set_visible(False)  # disable mouse Visibility
+
+    def _render_init(self):
+        self.engine = Engine(BLOCKS)
+
 
     @staticmethod
     def _lang_init():  # initialize translations
