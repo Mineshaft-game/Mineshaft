@@ -10,3 +10,6 @@
 [submodule "render"]
 	path = render
 	url = https://github.com/Mineshaft-game/RenderMite
+[submodule "RenderMite"]
+	path = RenderMite
+	url = https://github.com/Mineshaft-game/RenderMite
