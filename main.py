@@ -8,7 +8,7 @@ import random  # used for randomizing things
 import python_lang as lang  # used for translations
 import pygame_menu  # used for menu
 
-#rendering
+# rendering
 from render import Engine
 
 # these here are pretty self-explanatory
@@ -18,6 +18,7 @@ from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
 
 # block index
 from index.blocks import BLOCKS
+
 # translation function
 _ = lang.get
 
@@ -57,7 +58,6 @@ class Mineshaft:
 
     def _render_init(self):
         self.engine = Engine(BLOCKS)
-
 
     @staticmethod
     def _lang_init():  # initialize translations
