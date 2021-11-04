@@ -16,8 +16,9 @@ from libmineshaft.colors import WHITE  # color constants
 from libmineshaft.constants import WIDTH, HEIGHT  # other general constants
 from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
 
-# block index
-from index.blocks import BLOCKS
+# index
+#from index.blocks import BLOCKS
+from index.font import minecraftevenings 
 
 # translation function
 _ = lang.get
@@ -52,12 +53,12 @@ class Mineshaft:
             _("Mineshaft"), _("Mineshaft")
         )  # the display caption
         pygame.display.set_icon(  # set the icon
-            pygame.image.load(os.path.join("assets", "textures", "blocks", "Grass.png"))
+            pygame.image.load(os.path.join("assets", "textures", "blocks", "grass.png"))
         )
         pygame.mouse.set_visible(False)  # disable mouse Visibility
 
     def _render_init(self):
-        self.engine = Engine(BLOCKS)
+        self.engine = Engine(blockindex=BLOCKS)
 
     @staticmethod
     def _lang_init():  # initialize translations
@@ -72,25 +73,24 @@ class Mineshaft:
         self.menu = pygame_menu.Menu(  # set up the menu
             "", width - 100, height - 100, theme=MINESHAFT_DEFAULT_THEME
         )
+        
+        # set up title
+        self.menu.add.label("Mineshaft",  font_name=minecraftevenings,  font_size=130,  font_color=(0, 0, 0),  font_shadow_color=(255, 255, 255))
 
-        # add buttons
+        # add buttonsi
         self.menu.add.button(_("Start Game"), self.menu.toggle)
-        self.menu.adandd.button(_("Quit"), pygame_menu.events.EXIT)
+        self.menu.add.button(_("Quit"), pygame_menu.events.EXIT)
 
         # unused right now
         # monitor = screeninfo.get_monitors()[0]
 
         # set up the panorama
         self.menu.background = pygame.image.load(
-            os.path.join(os.path.abspath(os.getcwd()), "assets", "panorama.jpeg")
+            os.path.join("assets", "panorama.jpeg")
         )
         self.menu.background = pygame.transform.scale(
             self.menu.background, (width * 2, height * 2)
         )
-
-        # set up title
-        self.title = pygame.image.load(os.path.join("assets", "mineshaft.png"))
-        self.title = pygame.transform.scale(self.title, (int(width), int(height / 9)))
 
     def _update_panorama(self, currentpos):
         # finding out where should the panorama float
@@ -151,7 +151,6 @@ class Mineshaft:
                 self.menu.background, self.currentpanoramapos
             )  # blit the panorama
             self.menu.draw(self.screen)  # blit menu
-            self.screen.blit(self.title, [0, 0])  # blit title
 
         pygame.display.flip()  # fllip the display to show the changes
 

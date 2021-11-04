@@ -1,6 +1,6 @@
 from libmineshaft.blocks import Block, MultipleStateBlock, NoIDBlock
 
-air = Block(0, image=False, resistance=-1, name="Air", falls=False, breaktime=-1)
+air = Block(0, image=["assets",  "images",  "blocks",  "air.png"], resistance=-1, name="Air", falls=False, breaktime=-1)
 stone = MultipleStateBlock(
     1,
     [

@@ -3,13 +3,13 @@
 	url = https://github.com/Mineshaft-game/RenderMite
 [submodule "assets"]
 	path = assets
-	url = http://localhost:3000/Mineshaft/Assets.git
+	url = https://github.com/Mineshaft-game/assets
 [submodule "gen"]
 	path = gen
-	url = http://localhost:3000/Mineshaft/gen1121.git
+	url = https://github.com/Mineshaft-game/gen1121
 [submodule "render"]
 	path = render
-	url = http://localhost:3000/Mineshaft/RenderMite.git
+	url = https://github.com/Mineshaft-game/RenderMite
 [submodule "RenderMite"]
 	path = RenderMite
 	url = https://github.com/Mineshaft-game/RenderMite
