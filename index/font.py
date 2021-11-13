@@ -1,6 +1,4 @@
-import pygame.font as pgfont
 import os
 
-pgfont.init()
-
-minecraftevenings= os.path.join("fonts",  "MinecraftEvenings.ttf")
+minecraftevenings = os.path.join("fonts", "MinecraftEvenings.ttf")
+minecraftfont = os.path.join("fonts", "Minecraft.ttf")
