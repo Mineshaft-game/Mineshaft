@@ -1,9 +1,24 @@
-# import the needed modules
-import pygame
-
-# import screeninfo # Temporarily unused
 import os  # used for getting absolute paths and os-related things
 import sys  # used for quitting the Python environment without breaking anything
+import configparser
+
+config = configparser.ConfigParser()
+try: 
+    if os.path.exists(".mineshaft.ini"):
+        config.read(".mineshaft.ini")
+
+except:
+    if os.path.exists(os.path.join("config",  "mineshaft.ini")):
+        config.read(os.path.join("config", "mineshaft.ini"))
+    else:
+        sys.exit(print("Can't find configuration file. Quitting"))
+    
+HEIGHT = int(config['display']['height'])
+WIDTH = int(config['display']['width'])
+    
+import pygame    
+
+# import screeninfo # Temporarily unused
 import random  # used for randomizing things
 import python_lang as lang  # used for translations
 import pygame_menu  # used for menu
@@ -13,7 +28,6 @@ from render import Engine
 
 # these here are pretty self-explanatory
 from libmineshaft.colors import WHITE  # color constants
-from libmineshaft.constants import WIDTH, HEIGHT  # other general constants
 from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
 
 # index

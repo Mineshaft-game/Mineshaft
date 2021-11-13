@@ -26,6 +26,7 @@ Mineshaft uses these Python libraries:
 - [Screeninfo](https://pypi.org/project/screeninfo)
 - [libmineshaft](https://pypi.org/project/libmineshaft) 
 - [python-lang](https://pypi.org/project/python-lang)
+- [configparser](https://pypi.org/project/configparser/)
 
 Optional:
 - [lupa](https://pypi.org/project/lupa) (for lua API)
