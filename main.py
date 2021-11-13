@@ -1,11 +1,24 @@
+#!/bin/python3
+'''
+Mineshaft
+
+
+This program is licensed under the Mineshaft License v0.2
+Copyright 2021 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
+Copyright 2021 Mayu Sakurai
+This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jibber-jabber.
+
+'''
+
+
 import os  # used for getting absolute paths and os-related things
 import sys  # used for quitting the Python environment without breaking anything
-import configparser
+import configparser #parsing the config
 
 config = configparser.ConfigParser()
 try:
-    if os.path.exists(".mineshaft.ini"):
-        config.read(".mineshaft.ini")
+    if os.path.exists(os.path.join(".mineshaft",  "mineshaft.conf")):
+        config.read(os.path.join(".mineshaft",  "mineshaft.conf"))
 
     else: raise FileNotFoundError
 
