@@ -1,4 +1,4 @@
 import os
 
-minecraftevenings = os.path.join("fonts", "MinecraftEvenings.ttf")
-minecraftfont = os.path.join("fonts", "Minecraft.ttf")
+minecraftevenings = os.path.join("assets", "fonts", "MinecraftEvenings.ttf")
+minecraftfont = os.path.join("assets", "fonts", "Minecraft.ttf")
