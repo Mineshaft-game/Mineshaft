@@ -16,17 +16,13 @@ import sys  # used for quitting the Python environment without breaking anything
 import configparser #parsing the config
 
 config = configparser.ConfigParser()
-try:
-    if os.path.exists(os.path.join(".mineshaft",  "mineshaft.conf")):
-        config.read(os.path.join(".mineshaft",  "mineshaft.conf"))
 
-    else: raise FileNotFoundError
+if os.path.exists(os.path.join(".mineshaft",  "mineshaft.conf")):
+    config.read(os.path.join(".mineshaft",  "mineshaft.conf"))
 
-except:
-    if os.path.exists(os.path.join("config", "mineshaft.ini")):
-        config.read(os.path.join("config", "mineshaft.ini"))
-    else:
-        sys.exit(print("Can't find configuration file. Quitting"))
+else: raise FileNotFoundError("Can't find .mineshaft/mineshaft.conf")
+
+
 
 if int(config["debug"]["showdebug"]):
     showdebug = True
@@ -78,13 +74,27 @@ debug("Imported libmineshaft constants",  "import")
 # index
 # from index.blocks import BLOCKS
 from index.font import minecraftevenings, minecraftfont
-debug("imported font path constants from index",  "import")
+from index.lang import translations
+debug("imported index",  "import")
 
 # translation function
 _ = lang.get
 debug("Created alias of lang.get as _",  "info")
 
+lang_broken = False
 
+#Helper functions
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+def lang_not_found(str): 
+    '''Is called when the language files arent found'''
+    return str + "⚙" #add hint that file is not loaded
+
+
+
+
+#Classes
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # the heart and the story of the game
 class Mineshaft:
     def __init__(self):  # the function called at the creation of the class
@@ -129,16 +139,24 @@ class Mineshaft:
 
     @staticmethod
     def _lang_init():  # initialize translations
-        # translation files
-        lang.add(os.path.join("lang", "en.xml"))  # English translation
-        debug("Load English translation",  "lang")
-        lang.add(os.path.join("lang", "de.xml"))  # Deutch translation
-        debug("Load Deutch translation",  "lang")
-        lang.add(os.path.join("lang", "ru.xml"))  # Russian translation
-        debug("Load Russian translation",  "lang")
-        # select a translations
-        lang.select(translation)
-        debug(f"{translation.title()} translation is selected",  "lang")
+        global lang_broken,  _
+        
+        for language in translations:
+            if os.path.exists(translations[language]):
+                lang.add(translations[language])
+                debug(f"Load {language} translation", "lang")
+            
+            else:
+                debug(f"Translation for {language} not found, setting _ to lang_not_found",  "lang] [warning")
+                _ = lang_not_found
+                lang_broken = True
+                break
+            
+            
+        # select a translation
+        if not lang_broken:
+            lang.select(translation)
+            debug(f"{translation.title()} translation is selected",  "lang")
 
     def _menu_init(self, width, height):
         self.menu = pygame_menu.Menu(  # set up the menu
