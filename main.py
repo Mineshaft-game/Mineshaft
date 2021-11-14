@@ -1,41 +1,85 @@
 #!/bin/python3
-'''
+"""
 Mineshaft
 
+This program was designed to break, but (unfortunately) works, so if it doesn't work at all, blame Joe. 
+Who's Joe? Joe Mama!
 
 This program is licensed under the Mineshaft License v0.2
 Copyright 2021 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
 Copyright 2021 Mayu Sakurai
 This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jibber-jabber.
 
-'''
+"""
 
 
 import os  # used for getting absolute paths and os-related things
 import sys  # used for quitting the Python environment without breaking anything
-import configparser #parsing the config
+import configparser  # parsing the config
+
+if not os.path.exists(".mineshaft"):
+    os.mkdir(".mineshaft")
 
 config = configparser.ConfigParser()
 
-if os.path.exists(os.path.join(".mineshaft",  "mineshaft.conf")):
-    config.read(os.path.join(".mineshaft",  "mineshaft.conf"))
+if os.path.exists(os.path.join(".mineshaft", "mineshaft.conf")):
+    config.read(os.path.join(".mineshaft", "mineshaft.conf"))
 
-else: raise FileNotFoundError("Can't find .mineshaft/mineshaft.conf")
 
+else:
+    print(
+        "\
+    [WARNING] Can't find .mineshaft/mineshaft.conf,\n\
+    [WARNING] creating one instead. Be careful, this configuration\n\
+    [WARNING] may be broken or outdated.\n\
+    [WARNING] Note that the paths are absolute."
+    )
+    open(
+        os.path.join(".mineshaft", "mineshaft.conf"), "w"
+    ).write(  # it's extremely ugly in a python script.
+        """
+        [debug]
+        ; normal debug data, initliaziation, language file loading, warnings, etc
+        showdebug = 1
+        
+        ; show pygame's adversiment
+        showpygame = 0
+        ; debug data from every frame, delays a lot. This will work only if you enable showdebug 
+        showframedebug = 0
+        
+        
+        [display]
+        height = 600 
+        width = 800
+        name = Mineshaft 
+        
+        [appearance]
+        title_size = 130
+        font_size = 90
+        
+        
+        [language]
+        translation = en 
+        """
+    )
+
+    config.read(os.path.join(".mineshaft", "mineshaft.conf"))
 
 
 if int(config["debug"]["showdebug"]):
     showdebug = True
-else: 
+else:
     showdebug = False
 
-def debug(str,  type="Info"):
+
+def debug(str, type="Info"):
     global showdebug
-    type = "["+type.upper() + "] "
+    type = "[" + type.upper() + "] "
     if showdebug:
         print(type + str)
 
-debug("Hey developers, how's the debug working?",  "hey")
+
+debug("Hey developers, how's the debug working?", "hey")
 
 HEIGHT = int(config["display"]["height"])
 WIDTH = int(config["display"]["width"])
@@ -49,10 +93,9 @@ if not int(config["debug"]["showpygame"]):
     debug("Pygame support message disabled")
 
 
-
-
 import pygame
-debug("Imported pygame",  "import")
+
+debug("Imported pygame", "import")
 
 
 # import screeninfo # Temporarily unused
@@ -60,41 +103,42 @@ import random  # used for randomizing things
 import python_lang as lang  # used for translations
 import pygame_menu  # used for menu
 
-debug("Imported random, python_lang and pygame_menu successful",  "import")
+debug("Imported random, python_lang and pygame_menu successful", "import")
 
 # rendering
-#from render import Engine
-#debug("Imported Engine from render")
+# from render import Engine
+# debug("Imported Engine from render")
 
 # these here are pretty self-explanatory
 from libmineshaft.colors import WHITE  # color constants
 from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
-debug("Imported libmineshaft constants",  "import")
+
+debug("Imported libmineshaft constants", "import")
 
 # index
 # from index.blocks import BLOCKS
 from index.font import minecraftevenings, minecraftfont
 from index.lang import translations
-debug("imported index",  "import")
+
+debug("imported index", "import")
 
 # translation function
 _ = lang.get
-debug("Created alias of lang.get as _",  "info")
+debug("Created alias of lang.get as _", "info")
 
 lang_broken = False
 
-#Helper functions
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-def lang_not_found(str): 
-    '''Is called when the language files arent found'''
-    return str + "⚙" #add hint that file is not loaded
+# Helper functions
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
+def lang_not_found(str):
+    """Is called when the language files arent found"""
+    return str + "⚙"  # add hint that file is not loaded
 
 
-#Classes
-#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+# Classes
+# ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 # the heart and the story of the game
 class Mineshaft:
     def __init__(self):  # the function called at the creation of the class
@@ -110,20 +154,20 @@ class Mineshaft:
         self.screen = pygame.display.set_mode(
             (WIDTH, HEIGHT), pygame.RESIZABLE
         )  # the surface object
-        debug(f"Surface is created ({self.screen})",  "init")
+        debug(f"Surface is created ({self.screen})", "init")
         self.clock = pygame.time.Clock()  # useful for FPS
         debug("FPS counter is created")
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         debug(f"Menu initialized ({self.menu})")
         # MENU1.play(-1)
- 
+
     @staticmethod
     def _pygame_init():
         os.environ[
             "SDL_VIDEO_CENTERED"
         ] = "1"  # the environment variable that fixes issues on some platforms
         pygame.init()  # initialize pygame
-        debug("pygame initialization is sucessful",  "init")
+        debug("pygame initialization is sucessful", "init")
         pygame.display.set_caption(
             _("Mineshaft"), _("Mineshaft")
         )  # the display caption
@@ -134,36 +178,37 @@ class Mineshaft:
         pygame.mouse.set_visible(False)  # disable mouse Visibility
         debug("Mouse is invisible")
 
-    #def _render_init(self):
+    # def _render_init(self):
     #    self.engine = Engine(blockindex=BLOCKS)
 
     @staticmethod
     def _lang_init():  # initialize translations
-        global lang_broken,  _
-        
+        global lang_broken, _
+
         for language in translations:
             if os.path.exists(translations[language]):
                 lang.add(translations[language])
                 debug(f"Load {language} translation", "lang")
-            
+
             else:
-                debug(f"Translation for {language} not found, setting _ to lang_not_found",  "lang] [warning")
+                debug(
+                    f"Translation for {language} not found, setting _ to lang_not_found",
+                    "lang] [warning",
+                )
                 _ = lang_not_found
                 lang_broken = True
                 break
-            
-            
+
         # select a translation
         if not lang_broken:
             lang.select(translation)
-            debug(f"{translation.title()} translation is selected",  "lang")
+            debug(f"{translation.title()} translation is selected", "lang")
 
     def _menu_init(self, width, height):
         self.menu = pygame_menu.Menu(  # set up the menu
             "", width - 100, height - 100, theme=MINESHAFT_DEFAULT_THEME
         )
-        debug("Menu object created",  "init")
-        
+        debug("Menu object created", "init")
 
         # set up title
         self.menu.add.label(
@@ -173,7 +218,7 @@ class Mineshaft:
             font_color=(0, 0, 0),
             font_shadow_color=(255, 255, 255),
         )
-        debug("Add title label",  "menu")
+        debug("Add title label", "menu")
 
         # add buttons
         self.menu.add.button(
@@ -185,7 +230,6 @@ class Mineshaft:
             font_shadow_color=(255, 255, 255),
         )
 
-        
         self.menu.add.button(
             _("Quit"),
             pygame_menu.events.EXIT,
@@ -194,7 +238,7 @@ class Mineshaft:
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
         )
-        debug("Add buttons",  "menu")
+        debug("Add buttons", "menu")
 
         # unused right now
         # monitor = screeninfo.get_monitors()[0]
@@ -203,11 +247,11 @@ class Mineshaft:
         self.menu.background = pygame.image.load(
             os.path.join("assets", "panorama.jpeg")
         )
-        debug("Load panorama",  "menu")
+        debug("Load panorama", "menu")
         self.menu.background = pygame.transform.scale(
             self.menu.background, (width * 2, height * 2)
         )
-        debug("Resize panorama",  "menu")
+        debug("Resize panorama", "menu")
 
     def _update_panorama(self, currentpos):
         # finding out where should the panorama float
@@ -247,7 +291,7 @@ class Mineshaft:
                     (event.w, event.h), pygame.RESIZABLE
                 )
             elif event.type == pygame.QUIT:  # the user clicked the quit button
-                debug("Quitting, goodbye!",  'bye')
+                debug("Quitting, goodbye!", "bye")
                 sys.exit(pygame.quit())  # safely quit the program
 
         if self.menu.is_enabled():  # the  menu is enabled
