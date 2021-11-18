@@ -18,6 +18,7 @@ import sys  # used for quitting the Python environment without breaking anything
 import configparser  # parsing the config
 import logging
 import datetime
+import random  # used for randomizing things
 
 starttime = datetime.datetime.now()
 
@@ -70,14 +71,38 @@ else:
     config.read(os.path.join(".mineshaft", "mineshaft.conf"))
 
 
-
 if int(config["debug"]["showdebug"]):
-    logging.basicConfig(level=logging.DEBUG,  format=" %(asctime)s [%(levelname)s] -  %(message)s")
+    logging.basicConfig(
+        level=logging.DEBUG, format=" %(asctime)s [%(levelname)s] -  %(message)s"
+    )
 else:
-   logging.basicConfig(filename=os.path.join(".mineshaft",  "logs",  str(starttime) + ".txt" ), level=logging.INFO,  format=" %(asctime)s [%(levelname)s] -  %(message)s")
+    logging.basicConfig(
+        filename=os.path.join(".mineshaft", "logs", str(starttime) + ".log"),
+        level=logging.INFO,
+        format=" %(asctime)s [%(levelname)s] -  %(message)s",
+    )
 
 
-logging.info("Hey developers, how's the debug working?")
+logging.debug("Hey developers, how's the debug working?")
+
+logging.info(
+    random.choice(
+        [
+            "The cake is a yummy treat.",
+            "[Insert Numbers Here]",
+            "Aw man, here we go again...",
+            "Dark Member",
+            "Dank Memer",
+            "Woo!",
+            "Hope this won't be a crash report...",
+            "The only sentence that is interesting a tiny bit is now a bad one.",
+            ":(",
+            ":)",
+            ":D",
+            "D:",
+        ]
+    )
+)
 
 HEIGHT = int(config["display"]["height"])
 WIDTH = int(config["display"]["width"])
@@ -97,11 +122,10 @@ logging.info("Imported pygame")
 
 
 # import screeninfo # Temporarily unused
-import random  # used for randomizing things
 import python_lang as lang  # used for translations
 import pygame_menu  # used for menu
 
-logging.info("Imported random, python_lang and pygame_menu successful")
+logging.info("Import python_lang and pygame_menu successful")
 
 # rendering
 # from render import Engine
@@ -192,8 +216,9 @@ class Mineshaft:
 
             else:
                 logging.warning(
-                    f"Translation for {language} not found, setting _ to lang_not_found",)
-                    
+                    f"Translation for {language} not found, setting _ to lang_not_found"
+                )
+
                 _ = lang_not_found
                 lang_broken = True
                 break
