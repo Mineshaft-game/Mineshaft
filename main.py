@@ -6,6 +6,7 @@ This program was designed to break, but (unfortunately) works, so if it doesn't 
 Who's Joe? Joe Mama!
 
 This program is licensed under the Mineshaft License v0.2
+The Mineshaft License should have come provided with this program. If not, read it online at github.com/Mineshaft-game/Mineshaft
 Copyright 2021 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
 Copyright 2021 Mayu Sakurai
 This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jibber-jabber.
@@ -314,6 +315,7 @@ class Mineshaft:
                 self.screen = pygame.display.set_mode(  # reset the screen
                     (event.w, event.h), pygame.RESIZABLE
                 )
+                logging.debug(f"Screen is resized to {event.w}x{event.h}")
             elif event.type == pygame.QUIT:  # the user clicked the quit button
                 logging.info("Quitting, goodbye!")
                 sys.exit(pygame.quit())  # safely quit the program
@@ -336,14 +338,18 @@ class Mineshaft:
             self.screen.blit(
                 self.menu.background, self.currentpanoramapos
             )  # blit the panorama
+            logging.debug(f"Blit the panorama at {self.currentpanoramapos}")
             self.menu.draw(self.screen)  # blit menu
+            logging.debug("Draw the menu")
 
         pygame.display.flip()  # fllip the display to show the changes
+        logging.debug("Flipped the display")
 
         self.clock.tick(60)  # fps
 
 
 game = Mineshaft()  # create an instance of the game
+logging.debug(f"{game} is created")
 
 
 while True:  # main loop
