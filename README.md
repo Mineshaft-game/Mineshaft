@@ -36,8 +36,16 @@ To install the dependency libraries, run `pip install -r requirements.txt`.
 ### Installing from source code
 Currently we do not provide installer packages for all operational systems,since the game is not fully working.
 Once it enters the stable stage, packages for all systems will be released.
-1. Clone the repository using git: `git clone https://github.com/Mineshaft-game/Mineshaft` 
-2. Now you will be able to run the main file using `python3 main.py`.
+1. Clone the repository using git
+2. Install the requirements 
+3. Clone the submodules
+4. Run main.py
+```
+1. git clone http://github.com/Mineshaft-game/Mineshaft
+2. pip3 install -r requirements.txt
+3. git submodule init
+4. python3 main.py
+``` 
 
 ## Contributing
 Before changing code or anything consider reading our [guide](https://github.com/Mineshhaft-game/Mineshaft/blob/main/CONTRIBUTING.md) on code style and the core ideas behind the project.
