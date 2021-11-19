@@ -2,14 +2,21 @@
 """
 Mineshaft
 
-This program was designed to break, but (unfortunately) works, so if it doesn't work at all, ~~don't~~ leave it. 
-Who's Joe? Joe Mama!
+Mineshaft is a 2D clone/remake of a popluar game called Minecraft.
+
+Important links:
+Official Website: http://mineshaft.ml
+Contact email: mineshaftgamemusic@gmail.com
+Discord chat: http://dsc.gg/mineshaft2d
+
 
 This program is licensed under the Mineshaft License v0.2
 The Mineshaft License should have come provided with this program. If not, read it online at github.com/Mineshaft-game/Mineshaft
 Copyright 2021 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
-Copyright 2021 Mayu Sakurai
+Copyright 2021 Sakurai Mayu/Mayu Sakurai
 This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jibber-jabber.
+
+More information about Minecraft can be found online at http://wikipedia.org/wiki/Minecraft or on the official wiki: http://minecraft.fandom.com
 
 """
 
@@ -17,23 +24,27 @@ This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jib
 import os  # used for getting absolute paths and os-related things
 import sys  # used for quitting the Python environment without breaking anything
 import configparser  # parsing the config
-import logging
-import datetime
+import logging  # the only way to debug properly
+import datetime  # used to get the exact date and time as a string
 import random  # used for randomizing things
 
-starttime = datetime.datetime.now()
+starttime = datetime.datetime.now()  # approximately the time the program started
 
 
-if not os.path.exists(".mineshaft"):
-    os.mkdir(".mineshaft")
+if not os.path.exists(".mineshaft"):  # check if the .mineshaft directory exists
+    os.mkdir(".mineshaft")  # if not, create it
 
 config = configparser.ConfigParser()
 
-if os.path.exists(os.path.join(".mineshaft", "mineshaft.conf")):
-    config.read(os.path.join(".mineshaft", "mineshaft.conf"))
+if os.path.exists(
+    os.path.join(".mineshaft", "mineshaft.conf")
+):  # check if the configuration file exists
+    config.read(
+        os.path.join(".mineshaft", "mineshaft.conf")
+    )  # if yes, then read from it
 
 else:
-    print(
+    print(  # if not, print the warnings and create the config
         "\
     [WARNING] Can't find .mineshaft/mineshaft.conf,\n\
     [WARNING] creating one instead. Be careful, this configuration\n\
@@ -42,35 +53,38 @@ else:
     )
     open(
         os.path.join(".mineshaft", "mineshaft.conf"), "w"
-    ).write(  # it's extremely ugly in a python script.
-        """
-        [debug]
-        ; normal debug data, initliaziation, language file loading, warnings, etc
-        showdebug = 0
-        
-        ; show pygame's adversiment
-        showpygame = 0
-        ; debug data from every frame, delays a lot. This will work only if you enable showdebug 
-        showframedebug = 0
-        
-        
-        [display]
-        height = 600 
-        width = 800
-        name = Mineshaft 
-        
-        [appearance]
-        title_size = 130
-        font_size = 90
-        
-        
-        [language]
-        translation = en 
-        """
+    ).write(  # it's extremely ugly in a python script. Please note if you want to edit the default configuration, then edit it here
+        "\
+    [debug]\n\
+    ; normal debug data, initliaziation, language file loading, warnings, etc\n\
+    showdebug = 0\n\
+    \n\
+    ; show pygame's adversiment\n\
+    showpygame = 0\n\
+    ; debug data from every frame, delays a lot. This will work only if you enable showdebug\n\
+    showframedebug = 0\n\
+    \n\
+    \n\
+    [display]\n\
+    height = 600 \n\
+    width = 800\n\
+    name = Mineshaft\n\
+    sdl_centered = 1\n\
+    \n\
+    [appearance]\n\
+    title_size = 130\n\
+    font_size = 90\n\
+    \n\
+    \n\
+    [language]\n\
+    translation = en\n\
+    "
     )
 
     config.read(os.path.join(".mineshaft", "mineshaft.conf"))
 
+if not os.path.exists(os.path.join(".mineshaft", "logs")): # check if the logging folder exists
+    os.mkdir(os.path.join(".mineshaft",  "logs"))
 
 if int(config["debug"]["showdebug"]):
     logging.basicConfig(
@@ -87,19 +101,11 @@ else:
 logging.debug("Hey developers, how's the debug working?")
 
 logging.info(
-    random.choice(
+    random.choice(  # this one here is for you to understand ;D
         [
-            "The cake is a yummy treat.",
+            "The cake is a ~~lie~~ yummy treat.",
             "[Insert Numbers Here]",
             "Aw man, here we go again...",
-            "Dark Member",
-            "Dank Memer",
-            "Woo!",
-            "Hope this won't be a crash report...",
-            "The only sentence that is interesting a tiny bit is now a bad one.",
-            ":(",
-            ":)",
-            ":D",
             "D:",
         ]
     )
@@ -115,6 +121,13 @@ translation = str(config["language"]["translation"])
 if not int(config["debug"]["showpygame"]):
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
     logging.info("Pygame support message disabled")
+    
+if int(config["display"]["sdl_centered"]):
+    os.environ[
+            "SDL_VIDEO_CENTERED"
+        ] = "1"  # the environment variable that fixes issues on some platforms
+    
+    logging.info("SDL Video centered")
 
 
 import pygame
@@ -129,8 +142,9 @@ import pygame_menu  # used for menu
 logging.info("Import python_lang and pygame_menu successful")
 
 # rendering
-# from render import Engine
-# debug("Imported Engine from render")
+from render import Engine
+
+logging.debug("Imported Engine from ./render")
 
 # these here are pretty self-explanatory
 from libmineshaft.colors import WHITE  # color constants
@@ -139,7 +153,7 @@ from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
 logging.info("Imported libmineshaft constants")
 
 # index
-# from index.blocks import BLOCKS
+from index.blocks import BLOCKS as blockindex
 from index.font import minecraftevenings, minecraftfont
 from index.lang import translations
 
@@ -188,9 +202,6 @@ class Mineshaft:
 
     @staticmethod
     def _pygame_init():
-        os.environ[
-            "SDL_VIDEO_CENTERED"
-        ] = "1"  # the environment variable that fixes issues on some platforms
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
         pygame.display.set_caption(
@@ -203,8 +214,8 @@ class Mineshaft:
         pygame.mouse.set_visible(False)  # disable mouse Visibility
         logging.debug("Mouse is invisible")
 
-    # def _render_init(self):
-    #    self.engine = Engine(blockindex=BLOCKS)
+    def _render_init(self):
+        self.engine = Engine(blockindex=blockindex)
 
     @staticmethod
     def _lang_init():  # initialize translations
