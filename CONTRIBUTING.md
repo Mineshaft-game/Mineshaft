@@ -9,6 +9,9 @@ Use these codetags in comments:
 - WARNING: Something does not work
 - XXX: Major problem
 - NOTE: A note
+
+
+
 Most text editor plugins/IDEs should automatically import them into tasks.
 However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNING and NOTE).
 
