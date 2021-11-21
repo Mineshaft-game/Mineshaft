@@ -1,7 +1,7 @@
 # Contribution rules
 - Using git is preferred over GitHub web/Gitlab WebIDE.
 - Describe what you changed in the commits: no stupid commits like "Update README.md"
-# Codetags
+## Codetags
 Use these codetags in comments:
 - TODO: Introduces a general reminder about work that needs to be done
 - FIXME: Introduces a reminder that this part of the code doesn't entirely work  
@@ -15,6 +15,10 @@ Use these codetags in comments:
 Most text editor plugins/IDEs should automatically import them into tasks.
 However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNING and NOTE).
 
+
+-----
+
+
 # Structure information
 One of the core ideas of Mineshaft, is the replaceable modules.
 You can replace any piece of the Mineshaft modules with your own.Think of Mineshaft as a puzzle where you can replace pieces with different ones.
@@ -23,7 +27,6 @@ The "puzzle" is split into these directories:
 - `buildtools` are the various tools to make files like `.exe` or `.whl`
 - `scripts` are the scripts to do various stuffs. The documentation for them is available in the directory.
 - `lang` are the language files stored in `.xml` format.
-
 - `index` contains the index for blocks, items, and other.
 
 These have been converted into submodules:
