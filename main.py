@@ -1,4 +1,5 @@
 #!/bin/python3
+# -*- coding: utf-8 -*-
 """
 Mineshaft
 
@@ -8,6 +9,8 @@ Important links:
 Official Website: http://mineshaft.ml
 Contact email: mineshaftgamemusic@gmail.com
 Discord chat: http://dsc.gg/mineshaft2d
+Official game wiki: http://mineshaft.fandom.com
+Github organization: http://github.com/Mineshaft-game
 
 
 This program is licensed under the Mineshaft License v0.2
@@ -18,9 +21,27 @@ This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jib
 
 More information about Minecraft can be found online at http://wikipedia.org/wiki/Minecraft or on the official wiki: http://minecraft.fandom.com
 
+
+Contribution style:
+* Use these codetags in comments:
+    * TODO: Introduces a general reminder about work that needs to be done
+    * FIXME: Introduces a reminder that this part of the code doesn't entirely work  
+    * HACK:  Introduces a reminder that this part of the code works, perhaps barely, but that code should be improved
+    * WARNING: Something does not work
+    * XXX: Major problem
+    * NOTE: A note
+Most text editor plugins/IDEs should automatically import them into tasks.
+However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNING and NOTE).
+    
+    
+
 """
 
+__version__ = "unknown" 
+__author__ = "Alexey Pavlov"
+__credits__ = "All contributors, see __doc__ for the project page"
 
+#HACK: beautify imports, they're very ugly
 import os  # used for getting absolute paths and os-related things
 import sys  # used for quitting the Python environment without breaking anything
 import configparser  # parsing the config
@@ -34,7 +55,7 @@ starttime = datetime.datetime.now()  # approximately the time the program starte
 if not os.path.exists(".mineshaft"):  # check if the .mineshaft directory exists
     os.mkdir(".mineshaft")  # if not, create it
 
-config = configparser.ConfigParser()
+config = configparser.ConfigParser() 
 
 if os.path.exists(
     os.path.join(".mineshaft", "mineshaft.conf")
@@ -146,6 +167,10 @@ from render import Engine
 
 logging.debug("Imported Engine from ./render")
 
+# World generation engine (e.g. gen1121, ./gen)
+import gen
+logging.debug("Imported world generator")
+
 # these here are pretty self-explanatory
 from libmineshaft.colors import WHITE  # color constants
 from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
@@ -180,9 +205,11 @@ def lang_not_found(str):
 
 # the heart and the story of the game
 class Mineshaft:
+    #TODO: add __repr__ and __str__ methods to this class along with other useful dunder methods
     def __init__(self):  # the function called at the creation of the class
         self._lang_init()  # initialize the translations
         self._pygame_init()  # initialize pygame
+        self._render_init()
         self.currentpanoramapos = [
             random.randint(-1000, 0),
             random.randint(-500, 0),
@@ -198,10 +225,10 @@ class Mineshaft:
         logging.info("FPS counter is created")
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         logging.info(f"Menu initialized ({self.menu})")
-        # MENU1.play(-1)
+        #TODO: Add music to menu
 
-    @staticmethod
-    def _pygame_init():
+    
+    def _pygame_init(self):
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
         pygame.display.set_caption(
@@ -211,14 +238,16 @@ class Mineshaft:
             pygame.image.load(os.path.join("assets", "textures", "blocks", "grass.png"))
         )
         logging.debug("Icon is set")
+        #FIXME: It is still visible in pygame-menu
         pygame.mouse.set_visible(False)  # disable mouse Visibility
         logging.debug("Mouse is invisible")
 
     def _render_init(self):
         self.engine = Engine(blockindex=blockindex)
+        #TODO: Make it render
 
-    @staticmethod
-    def _lang_init():  # initialize translations
+    
+    def _lang_init(self):  # initialize translations
         global lang_broken, _
 
         for language in translations:
@@ -229,7 +258,8 @@ class Mineshaft:
             else:
                 logging.warning(
                     f"Translation for {language} not found, setting _ to lang_not_found"
-                )
+                ) 
+                #TODO: Search for translations, and notify the user if they are not found on GUI start
 
                 _ = lang_not_found
                 lang_broken = True
@@ -247,6 +277,7 @@ class Mineshaft:
         logging.debug("Menu object created")
 
         # set up title
+        #TODO: Make the label and buttons resize with menu
         self.menu.add.label(
             "Mineshaft",
             font_name=minecraftevenings,
@@ -259,7 +290,7 @@ class Mineshaft:
         # add buttons
         self.menu.add.button(
             _("Start Game"),
-            self.menu.toggle,
+            self._menu_singleplayer,
             font_name=minecraftfont,
             font_size=font_size,
             font_color=(255, 255, 255),
@@ -274,9 +305,12 @@ class Mineshaft:
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
         )
-        logging.debug("Add buttons")
+        logging.debug("Add buttons to menu")
+        
+        #TODO: add more buttons
 
         # unused right now
+        #NOTE: This will be used for the TODO in the _update_panorama, see the function for details
         # monitor = screeninfo.get_monitors()[0]
 
         # set up the panorama
@@ -291,6 +325,7 @@ class Mineshaft:
 
     def _update_panorama(self, currentpos):
         # finding out where should the panorama float
+        # TODO: Make panorama understand the current window size and adapt to it
         if currentpos[0] == 0:
             self.panorama_x_direction = 1
 
@@ -316,6 +351,14 @@ class Mineshaft:
             currentpos[1] -= 1
 
         return currentpos
+        
+    
+    def  _menu_singleplayer(self):
+        self.menu.toggle()
+        self.world = gen.generateWorld()
+        #TODO: Make this an actual singleplayer menu
+        
+        
 
     def update_game(self):
         # get  the events
@@ -334,12 +377,15 @@ class Mineshaft:
         if self.menu.is_enabled():  # the  menu is enabled
             window_size = self.screen.get_size()  # get the surface size
             self.menu.resize(window_size[0], window_size[1])  # resize the menu
+            logging.debug("Resized the menu")
             self.currentpanoramapos = self._update_panorama(
                 self.currentpanoramapos
             )  # update  the panorama position
+            logging.debug("Update the panorama position")
             self.menu.update(
                 events
             )  # make the menu safely update for every other event
+            logging.debug("Updated the menu")
 
     def draw_game(self):
 
@@ -352,6 +398,9 @@ class Mineshaft:
             logging.debug(f"Blit the panorama at {self.currentpanoramapos}")
             self.menu.draw(self.screen)  # blit menu
             logging.debug("Draw the menu")
+            
+        else:
+            self.engine.render(self.screen, self.world)
 
         pygame.display.flip()  # fllip the display to show the changes
         logging.debug("Flipped the display")
@@ -365,4 +414,6 @@ logging.debug(f"{game} is created")
 
 while True:  # main loop
     game.update_game()  # update the game
+    logging.debug("Update the game (Events)")
     game.draw_game()  # draw the game
+    logging.debug("Drew the game")
