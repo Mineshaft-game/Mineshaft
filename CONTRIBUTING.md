@@ -3,12 +3,12 @@
 - Describe what you changed in the commits: no stupid commits like "Update README.md"
 # Codetags
 Use these codetags in comments:
-    * TODO: Introduces a general reminder about work that needs to be done
-    * FIXME: Introduces a reminder that this part of the code doesn't entirely work  
-    * HACK:  Introduces a reminder that this part of the code works, perhaps barely, but that code should be improved
-    * WARNING: Something does not work
-    * XXX: Major problem
-    * NOTE: A note
+- TODO: Introduces a general reminder about work that needs to be done
+- FIXME: Introduces a reminder that this part of the code doesn't entirely work  
+- HACK:  Introduces a reminder that this part of the code works, perhaps barely, but that code should be improved
+- WARNING: Something does not work
+- XXX: Major problem
+- NOTE: A note
 Most text editor plugins/IDEs should automatically import them into tasks.
 However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNING and NOTE).
 
