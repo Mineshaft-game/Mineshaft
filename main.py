@@ -32,16 +32,17 @@ Contribution style:
     * NOTE: A note
 Most text editor plugins/IDEs should automatically import them into tasks.
 However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNING and NOTE).
-    
-    
+
+
 
 """
 
-__version__ = "unknown" 
+__version__ = "unknown"
 __author__ = "Alexey Pavlov"
 __credits__ = "All contributors, see __doc__ for the project page"
 
-#HACK: beautify imports, they're very ugly
+# HACK: beautify imports, they're very ugly
+# TODO: Sort the imports alphabetically
 import os  # used for getting absolute paths and os-related things
 import sys  # used for quitting the Python environment without breaking anything
 import configparser  # parsing the config
@@ -55,7 +56,7 @@ starttime = datetime.datetime.now()  # approximately the time the program starte
 if not os.path.exists(".mineshaft"):  # check if the .mineshaft directory exists
     os.mkdir(".mineshaft")  # if not, create it
 
-config = configparser.ConfigParser() 
+config = configparser.ConfigParser()
 
 if os.path.exists(
     os.path.join(".mineshaft", "mineshaft.conf")
@@ -104,8 +105,10 @@ else:
 
     config.read(os.path.join(".mineshaft", "mineshaft.conf"))
 
-if not os.path.exists(os.path.join(".mineshaft", "logs")): # check if the logging folder exists
-    os.mkdir(os.path.join(".mineshaft",  "logs"))
+if not os.path.exists(
+    os.path.join(".mineshaft", "logs")
+):  # check if the logging folder exists
+    os.mkdir(os.path.join(".mineshaft", "logs"))
 
 if int(config["debug"]["showdebug"]):
     logging.basicConfig(
@@ -142,12 +145,12 @@ translation = str(config["language"]["translation"])
 if not int(config["debug"]["showpygame"]):
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
     logging.info("Pygame support message disabled")
-    
+
 if int(config["display"]["sdl_centered"]):
     os.environ[
-            "SDL_VIDEO_CENTERED"
-        ] = "1"  # the environment variable that fixes issues on some platforms
-    
+        "SDL_VIDEO_CENTERED"
+    ] = "1"  # the environment variable that fixes issues on some platforms
+
     logging.info("SDL Video centered")
 
 
@@ -169,6 +172,7 @@ logging.debug("Imported Engine from ./render")
 
 # World generation engine (e.g. gen1121, ./gen)
 import gen
+
 logging.debug("Imported world generator")
 
 # these here are pretty self-explanatory
@@ -205,7 +209,7 @@ def lang_not_found(str):
 
 # the heart and the story of the game
 class Mineshaft:
-    #TODO: add __repr__ and __str__ methods to this class along with other useful dunder methods
+    # TODO: add __repr__ and __str__ methods to this class along with other useful dunder methods
     def __init__(self):  # the function called at the creation of the class
         self._lang_init()  # initialize the translations
         self._pygame_init()  # initialize pygame
@@ -225,9 +229,8 @@ class Mineshaft:
         logging.info("FPS counter is created")
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         logging.info(f"Menu initialized ({self.menu})")
-        #TODO: Add music to menu
+        # TODO: Add music to menu
 
-    
     def _pygame_init(self):
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
@@ -238,15 +241,14 @@ class Mineshaft:
             pygame.image.load(os.path.join("assets", "textures", "blocks", "grass.png"))
         )
         logging.debug("Icon is set")
-        #FIXME: It is still visible in pygame-menu
+        # FIXME: It is still visible in pygame-menu
         pygame.mouse.set_visible(False)  # disable mouse Visibility
         logging.debug("Mouse is invisible")
 
     def _render_init(self):
         self.engine = Engine(blockindex=blockindex)
-        #TODO: Make it render
+        # TODO: Make it render
 
-    
     def _lang_init(self):  # initialize translations
         global lang_broken, _
 
@@ -258,8 +260,8 @@ class Mineshaft:
             else:
                 logging.warning(
                     f"Translation for {language} not found, setting _ to lang_not_found"
-                ) 
-                #TODO: Search for translations, and notify the user if they are not found on GUI start
+                )
+                # TODO: Search for translations, and notify the user if they are not found on GUI start
 
                 _ = lang_not_found
                 lang_broken = True
@@ -277,7 +279,7 @@ class Mineshaft:
         logging.debug("Menu object created")
 
         # set up title
-        #TODO: Make the label and buttons resize with menu
+        # TODO: Make the label and buttons resize with menu
         self.menu.add.label(
             "Mineshaft",
             font_name=minecraftevenings,
@@ -306,11 +308,11 @@ class Mineshaft:
             font_shadow_color=(255, 255, 255),
         )
         logging.debug("Add buttons to menu")
-        
-        #TODO: add more buttons
+
+        # TODO: add more buttons
 
         # unused right now
-        #NOTE: This will be used for the TODO in the _update_panorama, see the function for details
+        # NOTE: This will be used for the TODO in the _update_panorama, see the function for details
         # monitor = screeninfo.get_monitors()[0]
 
         # set up the panorama
@@ -351,14 +353,11 @@ class Mineshaft:
             currentpos[1] -= 1
 
         return currentpos
-        
-    
-    def  _menu_singleplayer(self):
+
+    def _menu_singleplayer(self):
         self.menu.toggle()
         self.world = gen.generateWorld()
-        #TODO: Make this an actual singleplayer menu
-        
-        
+        # TODO: Make this an actual singleplayer menu
 
     def update_game(self):
         # get  the events
@@ -398,7 +397,7 @@ class Mineshaft:
             logging.debug(f"Blit the panorama at {self.currentpanoramapos}")
             self.menu.draw(self.screen)  # blit menu
             logging.debug("Draw the menu")
-            
+
         else:
             self.engine.render(self.screen, self.world)
 
