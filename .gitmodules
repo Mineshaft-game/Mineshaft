@@ -1,7 +1,4 @@
 
-[submodule "assets"]
-	path = assets
-	url = http://localhost:3000/Mineshaft/assets
 [submodule "gen"]
 	path = gen
 	url = http://localhost:3000/Mineshaft/gen1121
