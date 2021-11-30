@@ -28,8 +28,8 @@ Mineshaft uses these Python libraries:
 - [python-lang](https://pypi.org/project/python-lang)
 - [configparser](https://pypi.org/project/configparser/)
 
-Optional:
-- [lupa](https://pypi.org/project/lupa) (for lua API)
+Upcoming and not required:
+- [lupa](https://pypi.org/project/lupa) (for upcoming lua API)
 
 To install the dependency libraries, run `pip install -r requirements.txt`.
 

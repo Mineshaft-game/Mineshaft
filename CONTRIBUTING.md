@@ -28,14 +28,15 @@ The "puzzle" is split into these directories:
 - `scripts` are the scripts to do various stuffs. The documentation for them is available in the directory.
 - `lang` are the language files stored in `.xml` format.
 - `index` contains the index for blocks, items, and other.
+- `assets` are the game assets (music, images, fonts, etc.).
 
 These have been converted into submodules:
 - `render` is the rendering engine. The rendering engine manages how does the game get displayed. it also manages shading.
 - `gen` is the world generation engine.
-- `assets` are the assets like music, sounds, textures, and other stuff. 
 
 These no longer exist, but may be readded in the future:
 - `resources` used to have some files related to Mineshaft, which are now moved to [`libmineshaft`](https://github.com/Mineshaft-game/libmineshaft).
+- `assets` was a submodule previously, but was converted into a normal directory because of complexity. It may be readded as a submodule.
 
 The main script is in the `main.py` file at directory root. It contains most of the code for Mineshaft.
 # Setting up the developement enivroment
