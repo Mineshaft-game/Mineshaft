@@ -47,6 +47,12 @@ Once it enters the stable stage, packages for all systems will be released.
 4. python3 main.py
 ``` 
 
+OR
+
+
+
+[![Download Mineshaft](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/mineshaft2d/files/latest/download)
+
 ## Contributing
 Before changing code or anything consider reading our [guide](https://github.com/Mineshhaft-game/Mineshaft/blob/main/CONTRIBUTING.md) on code style and the core ideas behind the project.
 
