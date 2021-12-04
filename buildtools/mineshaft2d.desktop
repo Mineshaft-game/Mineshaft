@@ -12,7 +12,7 @@ Comment=Attempt to recreate Minecraft in 2D
 
 
 # The executable of the application, possibly with arguments.
-Exec=cd $HOME/Mineshaft && python3 $HOME/Mineshaft/main.py
+Exec=cd python3 $HOME/Mineshaft/main.py
 
 
 # Describes whether this application needs to be run in a terminal or not
