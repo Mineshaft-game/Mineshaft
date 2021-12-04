@@ -10,11 +10,9 @@ Name=Mineshaft (alpha)
 # A comment which can/will be used as a tooltip
 Comment=Attempt to recreate Minecraft in 2D
 
-# The path to the folder in which the executable is run
-Path="$HOME/Mineshaft"
 
 # The executable of the application, possibly with arguments.
-Exec=python3 $HOME/Mineshaft/main.py
+Exec=cd $HOME/Mineshaft && python3 $HOME/Mineshaft/main.py
 
 
 # Describes whether this application needs to be run in a terminal or not
