@@ -5,6 +5,3 @@
 [submodule "render"]
 	path = render
 	url = http://github.com/Mineshaft-game/RenderMite.git
-[submodule "api/storyscript"]
-	path = api/storyscript
-	url = https://github.com/StoryScriptorg/StoryScript
