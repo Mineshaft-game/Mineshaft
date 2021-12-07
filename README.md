@@ -75,11 +75,8 @@ Here are the resources we used to create Mineshaft
 - [Pygame-menu documentation](https://pygame-menu.readthedocs.io)
 - [MCPI-Revival](https://mcpirevival.tk)
 - [Minecraft](https://Minecraft.net)
-- [Stackoverflow (yes)](https://stackoverflow.com)
-- [Story Script](https://github.com/storyscriptorg/storyscript)
+- [Stackoverflow](https://stackoverflow.com)
+- [StoryScript](https://github.com/storyscriptorg/storyscript)
 
 
-## Contributors
-Major contributors listed ONLY:
-- @leha-code (Original author)
-- @MayuSakurai (Active contributor)
+
