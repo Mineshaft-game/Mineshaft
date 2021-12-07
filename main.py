@@ -234,7 +234,8 @@ class Mineshaft:
         logging.info(f"Menu initialized ({self.menu})")
         # TODO: Add music to menu
 
-    def _pygame_init(self):
+    @staticmethod
+    def _pygame_init():
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
         pygame.display.set_caption(
@@ -252,7 +253,8 @@ class Mineshaft:
         self.engine = Engine(blockindex=blockindex)
         # TODO: Make it render
 
-    def _lang_init(self):  # initialize translations
+    @staticmethod
+    def _lang_init():  # initialize translations
         global lang_broken, _
 
         for language in translations:
