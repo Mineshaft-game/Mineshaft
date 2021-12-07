@@ -41,6 +41,9 @@ __version__ = "unknown"
 __author__ = "Alexey Pavlov"
 __credits__ = "All contributors, see __doc__ for the project page"
 
+CONFIG_DIR  = ".mineshaft"
+CONFIG_FILE = "mineshaft.conf"
+
 # HACK: beautify imports, they're very ugly
 # TODO: Sort the imports alphabetically
 import os  # used for getting absolute paths and os-related things
@@ -53,28 +56,28 @@ import random  # used for randomizing things
 starttime = datetime.datetime.now()  # approximately the time the program started
 
 
-if not os.path.exists(".mineshaft"):  # check if the .mineshaft directory exists
-    os.mkdir(".mineshaft")  # if not, create it
+if not os.path.exists(CONFIG_DIR):  # check if the .mineshaft directory exists
+    os.mkdir(CONFIG_DIR)  # if not, create it
 
 config = configparser.ConfigParser()
 
 if os.path.exists(
-    os.path.join(".mineshaft", "mineshaft.conf")
+    os.path.join(CONFIG_DIR,  CONFIG_FILE)
 ):  # check if the configuration file exists
     config.read(
-        os.path.join(".mineshaft", "mineshaft.conf")
+        os.path.join(CONFIG_DIR, CONFIG_FILE)
     )  # if yes, then read from it
 
 else:
     print(  # if not, print the warnings and create the config
-        "\
-    [WARNING] Can't find .mineshaft/mineshaft.conf,\n\
+        f"\
+    [WARNING] Can't find {CONFIG_DIR}{CONFIG_FILE},\n\
     [WARNING] creating one instead. Be careful, this configuration\n\
     [WARNING] may be broken or outdated.\n\
     [WARNING] Note that the paths are absolute."
     )
     open(
-        os.path.join(".mineshaft", "mineshaft.conf"), "w"
+        os.path.join(CONFIG_DIR, CONFIG_FILE), "w"
     ).write(  # it's extremely ugly in a python script. Please note if you want to edit the default configuration, then edit it here
         "\
     [debug]\n\
@@ -103,12 +106,12 @@ else:
     "
     )
 
-    config.read(os.path.join(".mineshaft", "mineshaft.conf"))
+    config.read(os.path.join(CONFIG_DIR, CONFIG_FILE))
 
 if not os.path.exists(
-    os.path.join(".mineshaft", "logs")
+    os.path.join(CONFIG_DIR, "logs")
 ):  # check if the logging folder exists
-    os.mkdir(os.path.join(".mineshaft", "logs"))
+    os.mkdir(os.path.join(CONFIG_DIR, "logs"))
 
 if int(config["debug"]["showdebug"]):
     logging.basicConfig(
@@ -116,7 +119,7 @@ if int(config["debug"]["showdebug"]):
     )
 else:
     logging.basicConfig(
-        filename=os.path.join(".mineshaft", "logs", str(starttime) + ".log"),
+        filename=os.path.join(CONFIG_DIR, "logs", str(starttime) + ".log"),
         level=logging.INFO,
         format=" %(asctime)s [%(levelname)s] -  %(message)s",
     )
