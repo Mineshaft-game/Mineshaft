@@ -1,6 +1,7 @@
 # Contribution rules
 - Using git is preferred over GitHub web/Gitlab WebIDE.
 - Describe what you changed in the commits: no stupid commits like "Update README.md"
+- Please do not use release candidate versions of libmineshaft
 ## Codetags
 Use these codetags in comments:
 - TODO: Introduces a general reminder about work that needs to be done
