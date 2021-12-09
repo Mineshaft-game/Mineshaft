@@ -119,7 +119,7 @@ if int(config["debug"]["showdebug"]):
     )
 else:
     logging.basicConfig(
-        filename=os.path.join(CONFIG_DIR, "logs", str(starttime) + ".log"),
+        filename=os.path.join(CONFIG_DIR, "logs", str(starttime.strftime("%Y-%m-%d %H%M%S")) + ".log"),
         level=logging.INFO,
         format=" %(asctime)s [%(levelname)s] -  %(message)s",
     )
@@ -201,9 +201,9 @@ lang_broken = False
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 
-def lang_not_found(str):
+def lang_not_found(s):
     """Is called when the language files arent found"""
-    return str + "⚙"  # add hint that file is not loaded
+    return s + "⚙"  # add hint that file is not loaded
 
 
 # Classes
