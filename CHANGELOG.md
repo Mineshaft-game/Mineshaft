@@ -1,3 +1,6 @@
+### ms-081221
+* Fix the problem when on Windows you could not launch Mineshaft because of a colon in a file name (Colons are not allowed in file names on Windows)
+
 ### ms-061221
 * remove storyscript as a submodule
 * add storyscript to requirements.txt instead
