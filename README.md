@@ -5,7 +5,7 @@
 [![Join the chat at https://gitter.im/Mineshaft-game/Mineshaft](https://badges.gitter.im/Mineshaft-game/Mineshaft.svg)](https://gitter.im/Mineshaft-game/Mineshaft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
 
 # Mineshaft
-[![Mineshaft](https://raw.githubusercontent.com/Mineshaft-game/Assets/main/mineshaft.png)](#)
+[![Mineshaft](https://github.com/Mineshaft-game/Mineshaft/raw/main/assets/branding/mineshaftlogo.png)](#)
 [![Pygame Powered!](https://github.com/pygame/pygame/blob/main/docs/pygame_powered.png)](https://pygame.org) 
 
 ## Installation
