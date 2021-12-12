@@ -71,7 +71,7 @@ if os.path.exists(
 else:
     print(  # if not, print the warnings and create the config
         f"\
-    [WARNING] Can't find {CONFIG_DIR}{CONFIG_FILE},\n\
+    [WARNING] Can't find {CONFIG_DIR}/{CONFIG_FILE},\n\
     [WARNING] creating one instead. Be careful, this configuration\n\
     [WARNING] may be broken or outdated.\n\
     [WARNING] Note that the paths are absolute."
@@ -230,6 +230,12 @@ class Mineshaft:
         logging.info(f"Surface is created ({self.screen})")
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
+    
+        self._show_df_intro()
+        
+        self._show_polarin_intro()
+        
+        
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         logging.info(f"Menu initialized ({self.menu})")
         # TODO: Add music to menu
@@ -252,6 +258,75 @@ class Mineshaft:
     def _render_init(self):
         self.engine = Engine(blockindex=blockindex)
         # TODO: Make it render
+        
+    
+    def _show_df_intro(self):
+        
+        MOVEMENT_SPEED = 5
+        
+        introended = False
+        
+        df1 = pygame.image.load(os.path.join("assets",  "logo",  "df-1.png"))
+        df2 = pygame.image.load(os.path.join("assets",  "logo",  "df-2.png"))
+        
+        df1_pos = -105
+        df2_pos = 500
+        
+        waits = 0
+        
+        
+        while not introended:
+            
+            if df1_pos == 200 and df2_pos == 200:
+                waits += 1
+                
+                if waits >= 120:
+                    introended = True
+            
+            self.screen.fill((0, 0, 0))
+            if df1_pos < 200:
+                df1_pos += MOVEMENT_SPEED
+                
+            if df2_pos > 200:
+                df2_pos -= MOVEMENT_SPEED
+            self.screen.blit(df1,  (200, df1_pos))
+            self.screen.blit(df2,  (305, df2_pos))
+            
+            pygame.display.flip()
+            self.clock.tick(60)
+            
+            
+    
+    def _show_polarin_intro(self):
+        
+        MOVEMENT_SPEED = 5
+        
+        polarin_x_pos = -500
+        
+        polarin_logo = pygame.transform.scale(pygame.image.load(os.path.join("assets",  "logo",  "polarin.png")),  (300,  300))
+        
+        introended = False
+        
+        waits = 0
+        
+        
+        while not introended:
+            
+            if not polarin_x_pos >= 200:
+                polarin_x_pos += MOVEMENT_SPEED
+            else:
+                waits += 1
+                
+                if waits >= 120:
+                    introended = True
+            
+            
+            self.screen.fill((242, 186, 5))
+            self.screen.blit(polarin_logo,  (polarin_x_pos,  160))
+            pygame.display.flip()
+            
+            self.clock.tick(60)
+            
 
     @staticmethod
     def _lang_init():  # initialize translations
