@@ -245,7 +245,6 @@ class Mineshaft:
     @staticmethod
     def _pygame_init():
         """Initialize Pygame"""
-        
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
         pygame.display.set_caption(
@@ -267,7 +266,6 @@ class Mineshaft:
     
     def _show_df_intro(self):
         """Show the Double Fractal title screen"""
-        
         MOVEMENT_SPEED = 5
         
         introended = False
@@ -305,7 +303,6 @@ class Mineshaft:
     
     def _show_polarin_intro(self):
         """Show the Polarin title screen"""
-        
         MOVEMENT_SPEED = 5
         
         polarin_x_pos = -500
@@ -480,7 +477,6 @@ class Mineshaft:
 
     def draw_game(self):
         """Draw the game"""
-
         self.screen.fill(WHITE)  # add the background to prevent distortion
 
         if self.menu.is_enabled():  # the menu is enabled
