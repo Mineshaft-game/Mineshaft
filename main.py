@@ -211,9 +211,11 @@ def lang_not_found(s):
 
 
 # the heart and the story of the game
-class Mineshaft:
+class Mineshaft: 
+    """The Heart and The Story of The Game"""
     # TODO: add __repr__ and __str__ methods to this class along with other useful dunder methods
     def __init__(self):  # the function called at the creation of the class
+        """Initialize the class"""
         self._lang_init()  # initialize the translations
         self._pygame_init()  # initialize pygame
         self._render_init()
@@ -242,6 +244,8 @@ class Mineshaft:
 
     @staticmethod
     def _pygame_init():
+        """Initialize Pygame"""
+        
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
         pygame.display.set_caption(
@@ -256,11 +260,13 @@ class Mineshaft:
         logging.debug("Mouse is invisible")
 
     def _render_init(self):
+        """Initialize the rendering engine"""
         self.engine = Engine(blockindex=blockindex)
         # TODO: Make it render
         
     
     def _show_df_intro(self):
+        """Show the Double Fractal title screen"""
         
         MOVEMENT_SPEED = 5
         
@@ -298,6 +304,7 @@ class Mineshaft:
             
     
     def _show_polarin_intro(self):
+        """Show the Polarin title screen"""
         
         MOVEMENT_SPEED = 5
         
@@ -330,6 +337,7 @@ class Mineshaft:
 
     @staticmethod
     def _lang_init():  # initialize translations
+        """Initialize the language loader"""
         global lang_broken, _
 
         for language in translations:
@@ -353,6 +361,7 @@ class Mineshaft:
             logging.info(f"{translation.title()} translation is selected")
 
     def _menu_init(self, width, height):
+        """Initialize the menu"""
         self.menu = pygame_menu.Menu(  # set up the menu
             "", width - 100, height - 100, theme=MINESHAFT_DEFAULT_THEME
         )
@@ -406,6 +415,7 @@ class Mineshaft:
         logging.debug("Resize panorama")
 
     def _update_panorama(self, currentpos):
+        """Update the panorama position"""
         # finding out where should the panorama float
         # TODO: Make panorama understand the current window size and adapt to it
         if currentpos[0] == 0:
@@ -435,11 +445,13 @@ class Mineshaft:
         return currentpos
 
     def _menu_singleplayer(self):
+        """Enter the singleplayer menu"""
         self.menu.toggle()
         self.world = gen.generateWorld()
         # TODO: Make this an actual singleplayer menu
 
     def update_game(self):
+        """Update the game"""
         # get  the events
         events = pygame.event.get()
         # loop for every event
@@ -467,6 +479,7 @@ class Mineshaft:
             logging.debug("Updated the menu")
 
     def draw_game(self):
+        """Draw the game"""
 
         self.screen.fill(WHITE)  # add the background to prevent distortion
 
