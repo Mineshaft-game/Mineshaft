@@ -312,7 +312,7 @@ class Mineshaft:
         
         while not introended:
             
-            if not polarin_x_pos >= 200:
+            if polarin_x_pos < 200:
                 polarin_x_pos += MOVEMENT_SPEED
             else:
                 waits += 1
