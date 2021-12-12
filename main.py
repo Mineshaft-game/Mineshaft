@@ -200,8 +200,8 @@ logging.debug("Created alias of lang.get as _")
 lang_broken = False
 
 
-BLACK = (0,  0,  0)
-WHITE = (255, 255,  255)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 
 BG_COLOR = BLACK
 
@@ -324,6 +324,7 @@ class Mineshaft:
 
             if polarin_x_pos < 200:
                 polarin_x_pos += MOVEMENT_SPEED
+
             else:
                 waits += 1
 
@@ -478,7 +479,7 @@ class Mineshaft:
                 events
             )  # make the menu safely update for every other event
             logging.debug("Updated the menu")
-            
+
             self.fps = str(int(self.clock.get_fps()))
             logging.debug("Update fps")
 
@@ -497,11 +498,12 @@ class Mineshaft:
 
         else:
             self.engine.render(self.screen, self.world)
-            
-        
+
         if show_fps:
-            fps_text = pygame.font.Font(minecraftfont,  50).render("FPS: "+self.fps, 1, (255, 255, 255))
-            self.screen.blit(fps_text,  (0, 0))
+            fps_text = pygame.font.Font(minecraftfont, 50).render(
+                "FPS: " + self.fps, 1, (255, 255, 255)
+            )
+            self.screen.blit(fps_text, (0, 0))
 
         pygame.display.flip()  # fllip the display to show the changes
         logging.debug("Flipped the display")
