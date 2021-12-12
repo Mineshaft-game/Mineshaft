@@ -41,7 +41,7 @@ __version__ = "unknown"
 __author__ = "Alexey Pavlov"
 __credits__ = "All contributors, see __doc__ for the project page"
 
-CONFIG_DIR  = ".mineshaft"
+CONFIG_DIR = ".mineshaft"
 CONFIG_FILE = "mineshaft.conf"
 
 # HACK: beautify imports, they're very ugly
@@ -62,11 +62,9 @@ if not os.path.exists(CONFIG_DIR):  # check if the .mineshaft directory exists
 config = configparser.ConfigParser()
 
 if os.path.exists(
-    os.path.join(CONFIG_DIR,  CONFIG_FILE)
+    os.path.join(CONFIG_DIR, CONFIG_FILE)
 ):  # check if the configuration file exists
-    config.read(
-        os.path.join(CONFIG_DIR, CONFIG_FILE)
-    )  # if yes, then read from it
+    config.read(os.path.join(CONFIG_DIR, CONFIG_FILE))  # if yes, then read from it
 
 else:
     print(  # if not, print the warnings and create the config
@@ -119,7 +117,9 @@ if int(config["debug"]["showdebug"]):
     )
 else:
     logging.basicConfig(
-        filename=os.path.join(CONFIG_DIR, "logs", str(starttime.strftime("%Y-%m-%d %H%M%S")) + ".log"),
+        filename=os.path.join(
+            CONFIG_DIR, "logs", str(starttime.strftime("%Y-%m-%d %H%M%S")) + ".log"
+        ),
         level=logging.INFO,
         format=" %(asctime)s [%(levelname)s] -  %(message)s",
     )
@@ -211,11 +211,11 @@ def lang_not_found(s):
 
 
 # the heart and the story of the game
-class Mineshaft: 
+class Mineshaft:
     """The Heart and The Story of The Game"""
-    
+
     # TODO: add __repr__ and __str__ methods to this class along with other useful dunder methods
-    
+
     def __init__(self):  # the function called at the creation of the class
         """Initialize the class"""
         self._lang_init()  # initialize the translations
@@ -234,12 +234,11 @@ class Mineshaft:
         logging.info(f"Surface is created ({self.screen})")
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
-    
+
         self._show_df_intro()
-        
+
         self._show_polarin_intro()
-        
-        
+
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         logging.info(f"Menu initialized ({self.menu})")
         # TODO: Add music to menu
@@ -264,75 +263,70 @@ class Mineshaft:
         """Initialize the rendering engine"""
         self.engine = Engine(blockindex=blockindex)
         # TODO: Make it render
-        
-    
+
     def _show_df_intro(self):
         """Show the Double Fractal title screen"""
         MOVEMENT_SPEED = 5
-        
+
         introended = False
-        
-        df1 = pygame.image.load(os.path.join("assets",  "logo",  "df-1.png"))
-        df2 = pygame.image.load(os.path.join("assets",  "logo",  "df-2.png"))
-        
+
+        df1 = pygame.image.load(os.path.join("assets", "logo", "df-1.png"))
+        df2 = pygame.image.load(os.path.join("assets", "logo", "df-2.png"))
+
         df1_pos = -105
         df2_pos = 500
-        
+
         waits = 0
-        
-        
+
         while not introended:
-            
+
             if df1_pos == 200 and df2_pos == 200:
                 waits += 1
-                
+
                 if waits >= 120:
                     introended = True
-            
+
             self.screen.fill((0, 0, 0))
             if df1_pos < 200:
                 df1_pos += MOVEMENT_SPEED
-                
+
             if df2_pos > 200:
                 df2_pos -= MOVEMENT_SPEED
-            self.screen.blit(df1,  (200, df1_pos))
-            self.screen.blit(df2,  (305, df2_pos))
-            
+            self.screen.blit(df1, (200, df1_pos))
+            self.screen.blit(df2, (305, df2_pos))
+
             pygame.display.flip()
             self.clock.tick(60)
-            
-            
-    
+
     def _show_polarin_intro(self):
         """Show the Polarin title screen"""
         MOVEMENT_SPEED = 5
-        
+
         polarin_x_pos = -500
-        
-        polarin_logo = pygame.transform.scale(pygame.image.load(os.path.join("assets",  "logo",  "polarin.png")),  (300,  300))
-        
+
+        polarin_logo = pygame.transform.scale(
+            pygame.image.load(os.path.join("assets", "logo", "polarin.png")), (300, 300)
+        )
+
         introended = False
-        
+
         waits = 0
-        
-        
+
         while not introended:
-            
+
             if polarin_x_pos < 200:
                 polarin_x_pos += MOVEMENT_SPEED
             else:
                 waits += 1
-                
+
                 if waits >= 120:
                     introended = True
-            
-            
+
             self.screen.fill((242, 186, 5))
-            self.screen.blit(polarin_logo,  (polarin_x_pos,  160))
+            self.screen.blit(polarin_logo, (polarin_x_pos, 160))
             pygame.display.flip()
-            
+
             self.clock.tick(60)
-            
 
     @staticmethod
     def _lang_init():  # initialize translations
