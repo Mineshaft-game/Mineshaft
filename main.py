@@ -81,6 +81,7 @@ else:
     [debug]\n\
     ; normal debug data, initliaziation, language file loading, warnings, etc\n\
     showdebug = 0\n\
+    showfps = 0\n\
     \n\
     ; show pygame's adversiment\n\
     showpygame = 0\n\
@@ -145,6 +146,8 @@ font_size = int(config["appearance"]["font_size"])
 
 translation = str(config["language"]["translation"])
 
+show_fps = int(config["debug"]["showfps"])
+
 if not int(config["debug"]["showpygame"]):
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
     logging.info("Pygame support message disabled")
@@ -179,7 +182,6 @@ import gen
 logging.debug("Imported world generator")
 
 # these here are pretty self-explanatory
-from libmineshaft.colors import WHITE  # color constants
 from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
 
 logging.info("Imported libmineshaft constants")
@@ -196,6 +198,12 @@ _ = lang.get
 logging.debug("Created alias of lang.get as _")
 
 lang_broken = False
+
+
+BLACK = (0,  0,  0)
+WHITE = (255, 255,  255)
+
+BG_COLOR = BLACK
 
 # Helper functions
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
@@ -286,7 +294,7 @@ class Mineshaft:
                 if waits >= 120:
                     introended = True
 
-            self.screen.fill((0, 0, 0))
+            self.screen.fill(BLACK)
             if df1_pos < 200:
                 df1_pos += MOVEMENT_SPEED
 
@@ -470,10 +478,14 @@ class Mineshaft:
                 events
             )  # make the menu safely update for every other event
             logging.debug("Updated the menu")
+            
+            self.fps = str(int(self.clock.get_fps()))
+            logging.debug("Update fps")
 
     def draw_game(self):
+        global show_fps
         """Draw the game"""
-        self.screen.fill(WHITE)  # add the background to prevent distortion
+        self.screen.fill(BG_COLOR)  # add the background to prevent distortion
 
         if self.menu.is_enabled():  # the menu is enabled
             self.screen.blit(
@@ -485,11 +497,16 @@ class Mineshaft:
 
         else:
             self.engine.render(self.screen, self.world)
+            
+        
+        if show_fps:
+            fps_text = pygame.font.Font(minecraftfont,  50).render("FPS: "+self.fps, 1, (255, 255, 255))
+            self.screen.blit(fps_text,  (0, 0))
 
         pygame.display.flip()  # fllip the display to show the changes
         logging.debug("Flipped the display")
 
-        self.clock.tick(60)  # fps
+        self.clock.tick(-1)  # fps
 
 
 game = Mineshaft()  # create an instance of the game
