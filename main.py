@@ -213,7 +213,9 @@ def lang_not_found(s):
 # the heart and the story of the game
 class Mineshaft: 
     """The Heart and The Story of The Game"""
+    
     # TODO: add __repr__ and __str__ methods to this class along with other useful dunder methods
+    
     def __init__(self):  # the function called at the creation of the class
         """Initialize the class"""
         self._lang_init()  # initialize the translations
