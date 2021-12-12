@@ -484,7 +484,6 @@ class Mineshaft:
             logging.debug("Update fps")
 
     def draw_game(self):
-        global show_fps
         """Draw the game"""
         self.screen.fill(BG_COLOR)  # add the background to prevent distortion
 
