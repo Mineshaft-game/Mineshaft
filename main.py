@@ -37,7 +37,7 @@ However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNIN
 
 """
 
-__version__ = "unknown"
+__version__ = "ms-121221"
 __author__ = "Alexey Pavlov"
 __credits__ = "All contributors, see __doc__ for the project page"
 
@@ -249,7 +249,7 @@ class Mineshaft:
         self._show_df_intro()
 
         self._show_polarin_intro()
-        
+
         self._show_lusteria_intro()
 
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
@@ -360,33 +360,32 @@ class Mineshaft:
             pygame.display.flip()
 
             self.clock.tick(60)
-            
-        
-    
+
     def _show_lusteria_intro(self):
-        
-        lusteria_img = pygame.transform.scale(pygame.image.load(os.path.join("assets",  "logo",  "racuniverse.png")),  (600,  600))
-        
+
+        lusteria_img = pygame.transform.scale(
+            pygame.image.load(os.path.join("assets", "logo", "racuniverse.png")),
+            (600, 600),
+        )
+
         introended = False
-        
+
         waits = 0
-        
+
         while not introended:
-            
+
             waits += 1
-            
+
             if waits == 60:
                 break
-            
+
             if self.do_break_intro:
                 break
-            
-            
+
             self.screen.fill(BLACK)
-        
-            
-            self.screen.blit(lusteria_img,  (100,  0))
-            
+
+            self.screen.blit(lusteria_img, (100, 0))
+
             pygame.display.flip()
             self.clock.tick(60)
 
