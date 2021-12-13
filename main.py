@@ -233,6 +233,7 @@ class Mineshaft:
             random.randint(-1000, 0),
             random.randint(-500, 0),
         ]  # set up panorama position randomization
+
         self.panorama_x_direction = random.randint(0, 1)  # panorama variables
         self.panorama_y_direction = random.randint(0, 1)
         self.panorama_direction = random.randint(0, 1)
@@ -242,6 +243,8 @@ class Mineshaft:
         logging.info(f"Surface is created ({self.screen})")
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
+
+        self.show_fps = show_fps
 
         self._show_df_intro()
 
@@ -273,6 +276,7 @@ class Mineshaft:
         # TODO: Make it render
 
     def _show_df_intro(self):
+
         """Show the Double Fractal title screen"""
         MOVEMENT_SPEED = 5
 
@@ -286,6 +290,8 @@ class Mineshaft:
 
         waits = 0
 
+        self.do_break_intro = False
+
         while not introended:
 
             if df1_pos == 200 and df2_pos == 200:
@@ -293,6 +299,19 @@ class Mineshaft:
 
                 if waits >= 120:
                     introended = True
+
+            for event in pygame.event.get():
+
+                if event.type == pygame.KEYDOWN:
+
+                    if event.key == pygame.K_l:
+                        self.show_fps = 1
+
+                    elif event.key == pygame.K_q:
+                        self.do_break_intro = True
+
+            if self.do_break_intro:
+                break
 
             self.screen.fill(BLACK)
             if df1_pos < 200:
@@ -330,6 +349,9 @@ class Mineshaft:
 
                 if waits >= 120:
                     introended = True
+
+            if self.do_break_intro:
+                break
 
             self.screen.fill((242, 186, 5))
             self.screen.blit(polarin_logo, (polarin_x_pos, 160))
@@ -498,7 +520,7 @@ class Mineshaft:
         else:
             self.engine.render(self.screen, self.world)
 
-        if show_fps:
+        if self.show_fps:
             fps_text = pygame.font.Font(minecraftfont, 50).render(
                 "FPS: " + self.fps, 1, (255, 255, 255)
             )
@@ -510,12 +532,15 @@ class Mineshaft:
         self.clock.tick(-1)  # fps
 
 
-game = Mineshaft()  # create an instance of the game
-logging.debug(f"{game} is created")
+def main():
+    game = Mineshaft()  # create an instance of the game
+    logging.debug(f"{game} is created")
+    while True:  # main loop
+        game.update_game()  # update the game
+        logging.debug("Update the game (Events)")
+        game.draw_game()  # draw the game
+        logging.debug("Drew the game")
 
 
-while True:  # main loop
-    game.update_game()  # update the game
-    logging.debug("Update the game (Events)")
-    game.draw_game()  # draw the game
-    logging.debug("Drew the game")
+if __name__ == "__main__":
+    main()
