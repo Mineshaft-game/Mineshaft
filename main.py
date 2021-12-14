@@ -6,11 +6,11 @@ Mineshaft
 Mineshaft is a 2D clone/remake of a popluar game called Minecraft.
 
 Important links:
-Official Website: http://mineshaft.ml
+Official Website: https://mineshaft.ml
 Contact email: mineshaftgamemusic@gmail.com
-Discord chat: http://dsc.gg/mineshaft2d
-Official game wiki: http://mineshaft.fandom.com
-Github organization: http://github.com/Mineshaft-game
+Discord chat: https://dsc.gg/mineshaft2d
+Official game wiki: https://mineshaft.fandom.com
+Github organization: https://github.com/Mineshaft-game
 
 
 This program is licensed under the Mineshaft License v0.2
@@ -271,6 +271,8 @@ class Mineshaft:
         # FIXME: It is still visible in pygame-menu
         pygame.mouse.set_visible(False)  # disable mouse Visibility
         logging.debug("Mouse is invisible")
+        
+    
 
     def _render_init(self):
         """Initialize the rendering engine"""
