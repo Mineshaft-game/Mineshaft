@@ -212,7 +212,7 @@ BG_COLOR = BLACK
 
 
 def lang_not_found(s):
-    """Is called when the language files arent found"""
+    """Is called when the language files aren't found"""
     return s + "⚙"  # add hint that file is not loaded
 
 
@@ -231,10 +231,7 @@ class Mineshaft:
         self._lang_init()  # initialize the translations
         self._pygame_init()  # initialize pygame
         self._render_init()
-        self.currentpanoramapos = [
-            random.randint(-1000, 0),
-            random.randint(-500, 0),
-        ]  # set up panorama position randomization
+        self.currentpanoramapos = [0, 0,]  # set up panorama position 
 
         self.panorama_x_direction = random.randint(0, 1)  # panorama variables
         self.panorama_y_direction = random.randint(0, 1)
@@ -587,6 +584,7 @@ class Mineshaft:
 
 
 def main():
+    """The function called when the module is run but not imported"""
     game = Mineshaft()  # create an instance of the game
     logging.debug(f"{game} is created")
     while True:  # main loop
