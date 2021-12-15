@@ -248,13 +248,13 @@ class Mineshaft:
 
         self.show_fps = show_fps
 
-        self._show_df_intro()
+        self.show_df_intro()
 
-        self._show_polarin_intro()
+        self.show_polarin_intro()
         
         music.init_music()
 
-        self._show_lusteria_intro()
+        self.show_lusteria_intro()
 
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         logging.info(f"Menu initialized ({self.menu})")
@@ -283,7 +283,7 @@ class Mineshaft:
         self.engine = Engine(blockindex=blockindex)
         # TODO: Make it render
 
-    def _show_df_intro(self):
+    def show_df_intro(self):
 
         """Show the Double Fractal title screen"""
         MOVEMENT_SPEED = 5
@@ -333,7 +333,7 @@ class Mineshaft:
             pygame.display.flip()
             self.clock.tick(60)
 
-    def _show_polarin_intro(self):
+    def show_polarin_intro(self):
         """Show the Polarin title screen"""
         MOVEMENT_SPEED = 5
 
@@ -367,7 +367,7 @@ class Mineshaft:
 
             self.clock.tick(60)
 
-    def _show_lusteria_intro(self):
+    def show_lusteria_intro(self):
 
         lusteria_img = pygame.transform.scale(
             pygame.image.load(os.path.join("assets", "logo", "racuniverse.png")),
