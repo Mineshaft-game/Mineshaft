@@ -1,11 +1,17 @@
+[![Mineshaft](https://github.com/Mineshaft-game/Mineshaft/raw/main/assets/branding/mineshaftlogo.png)](#)
+
+
+
+
 [![](https://img.shields.io/badge/Cool-Yes-blue)](https://duckduckgo.com/😎)
 [![](https://img.shields.io/discord/868588717244317697?color=blue&label=Discord%20Community&logo=Discord&logoColor=black&style=social)](http://dsc.gg/mineshaft2d)
 [![](https://img.shields.io/badge/Pygame-2.0.1%2B-yellowgreen)](https://pygame.org)
 [![](https://img.shields.io/badge/Python%20-3.7%2B-yellow)](https://python.org)
 [![Join the chat at https://gitter.im/Mineshaft-game/Mineshaft](https://badges.gitter.im/Mineshaft-game/Mineshaft.svg)](https://gitter.im/Mineshaft-game/Mineshaft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Mineshaft-game_Mineshaft)](https://sonarcloud.io/summary/new_code?id=Mineshaft-game_Mineshaft)
 
 # Mineshaft
-[![Mineshaft](https://github.com/Mineshaft-game/Mineshaft/raw/main/assets/branding/mineshaftlogo.png)](#)
+
 [![Pygame Powered!](https://github.com/pygame/pygame/blob/main/docs/pygame_powered.png)](https://pygame.org) 
 
 ## Installation
