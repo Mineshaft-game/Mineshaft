@@ -173,6 +173,7 @@ logging.info("Import python_lang and pygame_menu successful")
 
 # rendering
 from render import Engine
+import render.wrapper.music  as music
 
 logging.debug("Imported Engine from ./render")
 
@@ -190,6 +191,7 @@ logging.info("Imported libmineshaft constants")
 from index.blocks import BLOCKS as blockindex
 from index.font import minecraftevenings, minecraftfont
 from index.lang import translations
+from index.music import menu1,  menu2
 
 logging.info("imported index")
 
@@ -249,6 +251,8 @@ class Mineshaft:
         self._show_df_intro()
 
         self._show_polarin_intro()
+        
+        music.init_music()
 
         self._show_lusteria_intro()
 
@@ -373,6 +377,8 @@ class Mineshaft:
         introended = False
 
         waits = 0
+        
+        x_pos = 100
 
         while not introended:
 
@@ -383,10 +389,20 @@ class Mineshaft:
 
             if self.do_break_intro:
                 break
+                
+            
+            if x_pos >= 110:
+                x_pos -= random.randint(1, 10)
+            
+            elif x_pos <= 90 :
+                x_pos += random.randint(1, 10)
+            
+            else:
+                x_pos += random.randint(-5,  10)
 
             self.screen.fill(BLACK)
 
-            self.screen.blit(lusteria_img, (100, 0))
+            self.screen.blit(lusteria_img, (x_pos, -50))
 
             pygame.display.flip()
             self.clock.tick(60)
@@ -469,6 +485,9 @@ class Mineshaft:
             self.menu.background, (width * 2, height * 2)
         )
         logging.debug("Resize panorama")
+        
+        music.load_music(random.choice((menu1,  menu2)))
+        music.play_music()
 
     def _update_panorama(self, currentpos):
         """Update the panorama position"""
@@ -533,9 +552,12 @@ class Mineshaft:
                 events
             )  # make the menu safely update for every other event
             logging.debug("Updated the menu")
-
+            
             self.fps = str(int(self.clock.get_fps()))
             logging.debug("Update fps")
+            
+            if not music.get_busy():
+                music.load_music(random.choice((menu1,  menu2)))
 
     def draw_game(self):
         """Draw the game"""
