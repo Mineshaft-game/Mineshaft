@@ -191,7 +191,7 @@ logging.info("Imported libmineshaft constants")
 from index.blocks import BLOCKS as blockindex
 from index.font import minecraftevenings, minecraftfont
 from index.lang import translations
-from index.music import menu1, menu2
+from index.music import MENU
 
 logging.info("imported index")
 
@@ -279,8 +279,10 @@ class Mineshaft:
         # TODO: Make it render
 
     def show_df_intro(self):
-
         """Show the Double Fractal title screen"""
+        
+        FREEZE_TIME = 30
+        
         MOVEMENT_SPEED = 5
 
         introended = False
@@ -300,7 +302,7 @@ class Mineshaft:
             if df1_pos == 200 and df2_pos == 200:
                 waits += 1
 
-                if waits >= 120:
+                if waits >= FREEZE_TIME:
                     introended = True
 
             for event in pygame.event.get():
@@ -330,7 +332,10 @@ class Mineshaft:
 
     def show_polarin_intro(self):
         """Show the Polarin title screen"""
-        MOVEMENT_SPEED = 5
+        
+        FREEZE_TIME = 30
+        
+        MOVEMENT_SPEED = 10
 
         polarin_x_pos = -500
 
@@ -350,7 +355,7 @@ class Mineshaft:
             else:
                 waits += 1
 
-                if waits >= 120:
+                if waits >= FREEZE_TIME:
                     introended = True
 
             if self.do_break_intro:
@@ -363,7 +368,8 @@ class Mineshaft:
             self.clock.tick(60)
 
     def show_lusteria_intro(self):
-
+        FREEZE_TIME = 60
+        
         lusteria_img = pygame.transform.scale(
             pygame.image.load(os.path.join("assets", "logo", "racuniverse.png")),
             (600, 600),
@@ -379,7 +385,7 @@ class Mineshaft:
 
             waits += 1
 
-            if waits == 60:
+            if waits == FREEZE_TIME:
                 break
 
             if self.do_break_intro:
@@ -480,7 +486,7 @@ class Mineshaft:
         )
         logging.debug("Resize panorama")
 
-        music.load_music(random.choice((menu1, menu2)))
+        music.load_music(random.choice(MENU))
         music.play_music()
 
     def _update_panorama(self, currentpos):
@@ -551,7 +557,7 @@ class Mineshaft:
             logging.debug("Update fps")
 
             if not music.get_busy():
-                music.load_music(random.choice((menu1, menu2)))
+                music.load_music(random.choice(MENU))
 
     def draw_game(self):
         """Draw the game"""
