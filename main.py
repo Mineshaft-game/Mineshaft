@@ -280,7 +280,6 @@ class Mineshaft:
 
     def show_df_intro(self):
         """Show the Double Fractal title screen"""
-        
         FREEZE_TIME = 30
         
         MOVEMENT_SPEED = 5
@@ -332,7 +331,6 @@ class Mineshaft:
 
     def show_polarin_intro(self):
         """Show the Polarin title screen"""
-        
         FREEZE_TIME = 30
         
         MOVEMENT_SPEED = 10
