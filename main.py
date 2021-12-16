@@ -91,7 +91,7 @@ else:
     \n\
     [display]\n\
     height = 600 \n\
-    width = 800\n\
+    width = 850\n\
     name = Mineshaft\n\
     sdl_centered = 1\n\
     \n\
@@ -189,7 +189,7 @@ logging.info("Imported libmineshaft constants")
 
 # index
 from index.blocks import BLOCKS as blockindex
-from index.font import minecraftevenings, minecraftfont
+from index.font import minecraftfont
 from index.lang import translations
 from index.music import MENU
 
@@ -309,7 +309,7 @@ class Mineshaft:
 
                 if event.type == pygame.KEYDOWN:
 
-                    if event.key == pygame.K_l:
+                    if event.key == pygame.K_f:
                         self.show_fps = 1
 
                     elif event.key == pygame.K_q:
@@ -441,13 +441,7 @@ class Mineshaft:
 
         # set up title
         # TODO: Make the label and buttons resize with menu
-        self.menu.add.label(
-            "Mineshaft",
-            font_name=minecraftevenings,
-            font_size=130,
-            font_color=(0, 0, 0),
-            font_shadow_color=(255, 255, 255),
-        )
+        self.menu.add.image(os.path.join("assets",  "logo",  "mineshaft.png"))
         logging.debug("Add title label")
 
         # add buttons
@@ -557,7 +551,7 @@ class Mineshaft:
             logging.debug("Update fps")
 
             if not music.get_busy():
-                music.load_music(random.choice(MENU))
+                music.queue_music(random.choice(MENU))
 
     def draw_game(self):
         """Draw the game"""
