@@ -94,6 +94,7 @@ else:
     width = 850\n\
     name = Mineshaft\n\
     sdl_centered = 1\n\
+    panorama_enabled = 1\n\
     \n\
     [appearance]\n\
     title_size = 130\n\
@@ -148,6 +149,8 @@ translation = str(config["language"]["translation"])
 
 show_fps = int(config["debug"]["showfps"])
 
+panorama_enabled = int(config["display"]["panorama_enabled"])
+
 if not int(config["debug"]["showpygame"]):
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
     logging.info("Pygame support message disabled")
@@ -182,16 +185,13 @@ import gen
 
 logging.debug("Imported world generator")
 
-# these here are pretty self-explanatory
-from libmineshaft.themes import MINESHAFT_DEFAULT_THEME  # menu themes
-
-logging.info("Imported libmineshaft constants")
 
 # index
 from index.blocks import BLOCKS as blockindex
 from index.font import minecraftfont
 from index.lang import translations
 from index.music import MENU
+from index.themes import MINESHAFT_DEFAULT_THEME,  MINESHAFT_SUBMENU_THEME
 
 logging.info("imported index")
 
@@ -246,8 +246,6 @@ class Mineshaft:
         self.show_fps = show_fps
 
         self.show_df_intro()
-
-        self.show_polarin_intro()
 
         music.init_music()
 
@@ -329,42 +327,6 @@ class Mineshaft:
             pygame.display.flip()
             self.clock.tick(60)
 
-    def show_polarin_intro(self):
-        """Show the Polarin title screen"""
-        FREEZE_TIME = 30
-        
-        MOVEMENT_SPEED = 10
-
-        polarin_x_pos = -500
-
-        polarin_logo = pygame.transform.scale(
-            pygame.image.load(os.path.join("assets", "logo", "polarin.png")), (300, 300)
-        )
-
-        introended = False
-
-        waits = 0
-
-        while not introended:
-
-            if polarin_x_pos < 200:
-                polarin_x_pos += MOVEMENT_SPEED
-
-            else:
-                waits += 1
-
-                if waits >= FREEZE_TIME:
-                    introended = True
-
-            if self.do_break_intro:
-                break
-
-            self.screen.fill((242, 186, 5))
-            self.screen.blit(polarin_logo, (polarin_x_pos, 160))
-            pygame.display.flip()
-
-            self.clock.tick(60)
-
     def show_lusteria_intro(self):
         FREEZE_TIME = 60
         
@@ -436,6 +398,8 @@ class Mineshaft:
             "", width - 100, height - 100, theme=MINESHAFT_DEFAULT_THEME
         )
         logging.debug("Menu object created")
+        
+        self._submenu_settings_init(width,  height)
 
         # set up title
         # TODO: Make the label and buttons resize with menu
@@ -451,6 +415,8 @@ class Mineshaft:
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
         )
+        
+        self.menu.add.button(_("Settings"),  self.settings_submenu,  font_name=minecraftfont,  font_size=font_size, font_color=(255, 255, 255))
 
         self.menu.add.button(
             _("Quit"),
@@ -477,6 +443,8 @@ class Mineshaft:
             self.menu.background, (width * 2, height * 2)
         )
         logging.debug("Resize panorama")
+        
+        
 
         music.load_music(random.choice(MENU))
         music.play_music()
@@ -516,6 +484,17 @@ class Mineshaft:
         self.menu.toggle()
         self.world = gen.generateWorld()
         # TODO: Make this an actual singleplayer menu
+        
+    def _submenu_settings_init(self, width,  height):
+        
+        self.settings_submenu = pygame_menu.Menu("Settings",  width,  height,  theme=MINESHAFT_SUBMENU_THEME, )
+        
+        fps_discrete_range = {0: 'Auto', 15: '15',  30: '30', 60: '60', 120: '120', 200: '200'}
+        
+        self.settings_submenu.add.range_slider("FPS",  0,  list(fps_discrete_range.keys()), value_format=lambda x: fps_discrete_range[x],  width = 500,  font_color=(0, 0, 0),  font_name=minecraftfont,  font_size=font_size, range_text_value_tick_color=WHITE,  slider_text_value_color=WHITE,  slider_text_value_enabled=True, range_text_value_color=WHITE)
+        
+        self.settings_submenu.disable()
+
 
     def update_game(self):
         """Update the game"""
@@ -550,18 +529,23 @@ class Mineshaft:
 
             if not music.get_busy():
                 music.queue_music(random.choice(MENU))
+                
+            
 
     def draw_game(self):
         """Draw the game"""
         self.screen.fill(BG_COLOR)  # add the background to prevent distortion
-
+        
         if self.menu.is_enabled():  # the menu is enabled
-            self.screen.blit(
-                self.menu.background, self.currentpanoramapos
-            )  # blit the panorama
-            logging.debug(f"Blit the panorama at {self.currentpanoramapos}")
+            if panorama_enabled:
+                self.screen.blit(
+                    self.menu.background, self.currentpanoramapos
+                )  # blit the panorama
+                logging.debug(f"Blit the panorama at {self.currentpanoramapos}")
             self.menu.draw(self.screen)  # blit menu
             logging.debug("Draw the menu")
+            
+            
 
         else:
             self.engine.render(self.screen, self.world)
