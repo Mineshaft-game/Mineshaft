@@ -529,8 +529,11 @@ class Mineshaft:
 
             if not music.get_busy():
                 music.queue_music(random.choice(MENU))
-                
-            
+        
+        
+        if self.settings_submenu.is_enabled():
+            window_size = self.screen.get_size()  # get the surface size
+            self.settings_submenu.resize(window_size[0], window_size[1])  # resize the menu
 
     def draw_game(self):
         """Draw the game"""
