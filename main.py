@@ -191,7 +191,7 @@ from index.blocks import BLOCKS as blockindex
 from index.font import minecraftfont
 from index.lang import translations
 from index.music import MENU
-from index.themes import MINESHAFT_DEFAULT_THEME,  MINESHAFT_SUBMENU_THEME
+from index.themes import MINESHAFT_DEFAULT_THEME, MINESHAFT_SUBMENU_THEME
 
 logging.info("imported index")
 
@@ -249,6 +249,8 @@ class Mineshaft:
 
         music.init_music()
 
+        self._menu_sound_init()
+
         self.show_lusteria_intro()
 
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
@@ -276,10 +278,23 @@ class Mineshaft:
         self.engine = Engine(blockindex=blockindex)
         # TODO: Make it render
 
+    def _menu_sound_init(self):
+        self.soundengine = pygame_menu.sound.Sound()
+        self.soundengine.set_sound(
+            pygame_menu.sound.SOUND_TYPE_CLICK_MOUSE,
+            os.path.join("assets", "audio", "sound", "menu", "click.ogg"),
+        )
+        self.soundengine.set_sound(
+            pygame_menu.sound.SOUND_TYPE_ERROR,
+            os.path.join("assets", "audio", "sound", "menu", "error.ogg"),
+        )
+
     def show_df_intro(self):
         """Show the Double Fractal title screen"""
         FREEZE_TIME = 30
-        
+
+        FPS = 60
+
         MOVEMENT_SPEED = 5
 
         introended = False
@@ -325,11 +340,11 @@ class Mineshaft:
             self.screen.blit(df2, (305, df2_pos))
 
             pygame.display.flip()
-            self.clock.tick(60)
+            self.clock.tick(FPS)
 
     def show_lusteria_intro(self):
         FREEZE_TIME = 60
-        
+
         lusteria_img = pygame.transform.scale(
             pygame.image.load(os.path.join("assets", "logo", "racuniverse.png")),
             (600, 600),
@@ -397,13 +412,16 @@ class Mineshaft:
         self.menu = pygame_menu.Menu(  # set up the menu
             "", width - 100, height - 100, theme=MINESHAFT_DEFAULT_THEME
         )
+
+        self.menu.set_sound(self.soundengine, recursive=True)
+
         logging.debug("Menu object created")
-        
-        self._submenu_settings_init(width,  height)
+
+        self._submenu_settings_init(width, height)
 
         # set up title
         # TODO: Make the label and buttons resize with menu
-        self.menu.add.image(os.path.join("assets",  "logo",  "mineshaft.png"))
+        self.menu.add.image(os.path.join("assets", "logo", "mineshaft.png"))
         logging.debug("Add title label")
 
         # add buttons
@@ -415,8 +433,14 @@ class Mineshaft:
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
         )
-        
-        self.menu.add.button(_("Settings"),  self.settings_submenu,  font_name=minecraftfont,  font_size=font_size, font_color=(255, 255, 255))
+
+        self.menu.add.button(
+            _("Settings"),
+            self.settings_submenu,
+            font_name=minecraftfont,
+            font_size=font_size,
+            font_color=(255, 255, 255),
+        )
 
         self.menu.add.button(
             _("Quit"),
@@ -443,8 +467,6 @@ class Mineshaft:
             self.menu.background, (width * 2, height * 2)
         )
         logging.debug("Resize panorama")
-        
-        
 
         music.load_music(random.choice(MENU))
         music.play_music()
@@ -484,17 +506,38 @@ class Mineshaft:
         self.menu.toggle()
         self.world = gen.generateWorld()
         # TODO: Make this an actual singleplayer menu
-        
-    def _submenu_settings_init(self, width,  height):
-        
-        self.settings_submenu = pygame_menu.Menu("Settings",  width,  height,  theme=MINESHAFT_SUBMENU_THEME, )
-        
-        fps_discrete_range = {0: 'Auto', 15: '15',  30: '30', 60: '60', 120: '120', 200: '200'}
-        
-        self.settings_submenu.add.range_slider("FPS",  0,  list(fps_discrete_range.keys()), value_format=lambda x: fps_discrete_range[x],  width = 500,  font_color=(0, 0, 0),  font_name=minecraftfont,  font_size=font_size, range_text_value_tick_color=WHITE,  slider_text_value_color=WHITE,  slider_text_value_enabled=True, range_text_value_color=WHITE)
-        
-        self.settings_submenu.disable()
 
+    def _submenu_settings_init(self, width, height):
+
+        self.settings_submenu = pygame_menu.Menu(
+            "Settings", width, height, theme=MINESHAFT_SUBMENU_THEME
+        )
+
+        fps_discrete_range = {
+            0: "Auto",
+            15: "15",
+            30: "30",
+            60: "60",
+            120: "120",
+            200: "200",
+        }
+
+        self.settings_submenu.add.range_slider(
+            "FPS",
+            60,
+            list(fps_discrete_range.keys()),
+            value_format=lambda x: fps_discrete_range[x],
+            width=500,
+            font_color=(0, 0, 0),
+            font_name=minecraftfont,
+            font_size=font_size,
+            range_text_value_tick_color=WHITE,
+            slider_text_value_color=WHITE,
+            slider_text_value_enabled=True,
+            range_text_value_color=WHITE,
+        )
+
+        self.settings_submenu.disable()
 
     def update_game(self):
         """Update the game"""
@@ -529,16 +572,17 @@ class Mineshaft:
 
             if not music.get_busy():
                 music.queue_music(random.choice(MENU))
-        
-        
+
         if self.settings_submenu.is_enabled():
             window_size = self.screen.get_size()  # get the surface size
-            self.settings_submenu.resize(window_size[0], window_size[1])  # resize the menu
+            self.settings_submenu.resize(
+                window_size[0], window_size[1]
+            )  # resize the menu
 
     def draw_game(self):
         """Draw the game"""
         self.screen.fill(BG_COLOR)  # add the background to prevent distortion
-        
+
         if self.menu.is_enabled():  # the menu is enabled
             if panorama_enabled:
                 self.screen.blit(
@@ -547,8 +591,6 @@ class Mineshaft:
                 logging.debug(f"Blit the panorama at {self.currentpanoramapos}")
             self.menu.draw(self.screen)  # blit menu
             logging.debug("Draw the menu")
-            
-            
 
         else:
             self.engine.render(self.screen, self.world)
