@@ -214,7 +214,13 @@ BG_COLOR = BLACK
 def lang_not_found(s):
     """Is called when the language files aren't found"""
     return s + "⚙"  # add hint that file is not loaded
+    
+def save_config():
+    with open(os.path.join(CONFIG_DIR,  CONFIG_FILE)) as file:
+        config.write(file)
 
+def set_config(section: str,  key: str,  value: str):
+    config.set(section, key, value)
 
 # Classes
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
@@ -510,9 +516,31 @@ class Mineshaft:
     def _submenu_settings_init(self, width, height):
 
         self.settings_submenu = pygame_menu.Menu(
-            "Settings", width, height, theme=MINESHAFT_SUBMENU_THEME
+            "", width, height, theme=MINESHAFT_SUBMENU_THEME
         )
+        
+        self._submenu_settings_display_init(width,  height)
+        
+        self.settings_submenu.add.button("Display",  self.settings_submenu_display, 
+            font_name=minecraftfont,
+            font_size=font_size,
+            font_color=(255, 255, 255),
+            font_shadow_color=(255, 255, 255),)
+        self.settings_submenu.add.button("Back",  pygame_menu.events.BACK, 
+            font_name=minecraftfont,
+            font_size=font_size,
+            font_color=(255, 255, 255),
+            font_shadow_color=(255, 255, 255),)
 
+        self.settings_submenu.disable()
+        
+    
+    def _submenu_settings_display_init(self,  width,  height):
+        
+        self.settings_submenu_display = pygame_menu.Menu(
+            "", width, height, theme=MINESHAFT_SUBMENU_THEME
+        )
+        
         fps_discrete_range = {
             0: "Auto",
             15: "15",
@@ -521,8 +549,9 @@ class Mineshaft:
             120: "120",
             200: "200",
         }
-
-        self.settings_submenu.add.range_slider(
+        
+        
+        self.settings_submenu_display.add.range_slider(
             "FPS",
             60,
             list(fps_discrete_range.keys()),
@@ -536,8 +565,15 @@ class Mineshaft:
             slider_text_value_enabled=True,
             range_text_value_color=WHITE,
         )
-
-        self.settings_submenu.disable()
+        
+        
+        self.settings_submenu_display.add.button("Back",  pygame_menu.events.BACK, 
+            font_name=minecraftfont,
+            font_size=font_size,
+            font_color=(255, 255, 255),
+            font_shadow_color=(255, 255, 255),)
+        
+        self.settings_submenu_display.disable()
 
     def update_game(self):
         """Update the game"""
