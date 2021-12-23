@@ -48,7 +48,7 @@ CONFIG_FILE = "mineshaft.conf"
 # TODO: Sort the imports alphabetically
 import os  # used for getting absolute paths and os-related things
 import sys  # used for quitting the Python environment without breaking anything
-import configparser  # parsing the config
+import pickle  # parsing the config
 import logging  # the only way to debug properly
 import datetime  # used to get the exact date and time as a string
 import random  # used for randomizing things
@@ -59,61 +59,47 @@ starttime = datetime.datetime.now()  # approximately the time the program starte
 if not os.path.exists(CONFIG_DIR):  # check if the .mineshaft directory exists
     os.mkdir(CONFIG_DIR)  # if not, create it
 
-config = configparser.ConfigParser()
-
 if os.path.exists(
     os.path.join(CONFIG_DIR, CONFIG_FILE)
 ):  # check if the configuration file exists
-    config.read(os.path.join(CONFIG_DIR, CONFIG_FILE))  # if yes, then read from it
+    config = pickle.load(open(os.path.join(CONFIG_DIR, CONFIG_FILE),  "rb"))  # if yes, then read from it
 
 else:
     print(  # if not, print the warnings and create the config
         f"\
     [WARNING] Can't find {CONFIG_DIR}/{CONFIG_FILE},\n\
     [WARNING] creating one instead. Be careful, this configuration\n\
-    [WARNING] may be broken or outdated.\n\
+    [WARNING] may be broken or outdated. This may happen at the first run.\n\
     [WARNING] Note that the paths are absolute."
     )
-    open(
-        os.path.join(CONFIG_DIR, CONFIG_FILE), "w"
-    ).write(  # it's extremely ugly in a python script. Please note if you want to edit the default configuration, then edit it here
-        "\
-    [debug]\n\
-    ; normal debug data, initliaziation, language file loading, warnings, etc\n\
-    showdebug = 0\n\
-    showfps = 0\n\
-    \n\
-    ; show pygame's adversiment\n\
-    showpygame = 0\n\
-    ; debug data from every frame, delays a lot. This will work only if you enable showdebug\n\
-    showframedebug = 0\n\
-    \n\
-    \n\
-    [display]\n\
-    height = 600 \n\
-    width = 850\n\
-    name = Mineshaft\n\
-    sdl_centered = 1\n\
-    panorama_enabled = 1\n\
-    \n\
-    [appearance]\n\
-    title_size = 130\n\
-    font_size = 90\n\
-    \n\
-    \n\
-    [language]\n\
-    translation = en\n\
-    "
-    )
-
-    config.read(os.path.join(CONFIG_DIR, CONFIG_FILE))
+    defconfig = {
+    "showdebug" : False, 
+    "showfps" : False, 
+    "showpygame" : False, 
+    "showframedebug" : False, 
+    "height" : 600, 
+    "width" : 850, 
+    "name" : "Mineshaft", 
+    "sdl_centered" : True, 
+    "panorama_enabled" : True, 
+    "fps" : -1, 
+    "title_size" : 130, 
+    "font_size" : 90, 
+    "translation" : "en", 
+    }
+    
+    with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
+        pickle.dump(defconfig,  dumpfile)
+    
+    with open(os.path.join(CONFIG_DIR,  CONFIG_FILE),  "rb") as openfile:
+        config = pickle.load(openfile)
 
 if not os.path.exists(
     os.path.join(CONFIG_DIR, "logs")
 ):  # check if the logging folder exists
     os.mkdir(os.path.join(CONFIG_DIR, "logs"))
 
-if int(config["debug"]["showdebug"]):
+if config["showdebug"]:
     logging.basicConfig(
         level=logging.DEBUG, format=" %(asctime)s [%(levelname)s] -  %(message)s"
     )
@@ -140,22 +126,22 @@ logging.info(
     )
 )
 
-HEIGHT = int(config["display"]["height"])
-WIDTH = int(config["display"]["width"])
+HEIGHT = config["height"]
+WIDTH = config["width"]
 
-font_size = int(config["appearance"]["font_size"])
+font_size = config["font_size"]
 
-translation = str(config["language"]["translation"])
+translation = config["translation"]
 
-show_fps = int(config["debug"]["showfps"])
+show_fps = config["showfps"]
 
-panorama_enabled = int(config["display"]["panorama_enabled"])
+panorama_enabled = config["panorama_enabled"]
 
-if not int(config["debug"]["showpygame"]):
+if not config["showpygame"]:
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
     logging.info("Pygame support message disabled")
 
-if int(config["display"]["sdl_centered"]):
+if config["sdl_centered"]:
     os.environ[
         "SDL_VIDEO_CENTERED"
     ] = "1"  # the environment variable that fixes issues on some platforms
@@ -218,11 +204,11 @@ def lang_not_found(s):
 
 def save_config():
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE)) as file:
-        config.write(file)
+        pickle.dump(config,  file)
 
 
-def set_config(section: str, key: str, value: str):
-    config.set(section, key, value)
+def set_config(key: str, value):
+    config[key] = value
 
 
 # Classes
@@ -416,6 +402,7 @@ class Mineshaft:
             lang.select(translation)
             logging.info(f"{translation.title()} translation is selected")
 
+
     def _menu_init(self, width, height):
         """Initialize the menu"""
         self.menu = pygame_menu.Menu(  # set up the menu
@@ -531,6 +518,7 @@ class Mineshaft:
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
+            align=pygame_menu.locals.ALIGN_LEFT, 
         )
         self.settings_submenu.add.button(
             "Back",
@@ -542,6 +530,8 @@ class Mineshaft:
         )
 
         self.settings_submenu.disable()
+        
+        
 
     def _submenu_settings_display_init(self, width, height):
 
@@ -570,7 +560,7 @@ class Mineshaft:
             range_text_value_tick_color=WHITE,
             slider_text_value_color=WHITE,
             slider_text_value_enabled=True,
-            range_text_value_color=WHITE,
+            range_text_value_color=WHITE, 
         )
 
         self.settings_submenu_display.add.button(
@@ -583,6 +573,7 @@ class Mineshaft:
         )
 
         self.settings_submenu_display.disable()
+        
 
     def update_game(self):
         """Update the game"""
