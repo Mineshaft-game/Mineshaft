@@ -268,7 +268,7 @@ class Mineshaft:
             self.RPC = pypresence.Presence(config["presence_id"])  # Initialize the client class
             self.RPC.connect() # Start the handshake loop
             
-            self.RPC.update(state="Coding the rich presence", details="Testing the presence out", small_image="winter", large_image="winter",  buttons=[{"label":"Visit Mineshaft Website",  "url":"https://www.mineshaft.ml"}],  start=starttimestamp)
+            self.RPC.update(state="In menu", details="Looking at panorama", small_image="winter", large_image="winter",  buttons=[{"label":"Visit Mineshaft Website",  "url":"https://www.mineshaft.ml"}],  start=starttimestamp)
         except:
             logging.warning("Could not initialize Discord rich presence, skipping.")
     
