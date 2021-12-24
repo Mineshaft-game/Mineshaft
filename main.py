@@ -51,9 +51,11 @@ import sys  # used for quitting the Python environment without breaking anything
 import pickle  # parsing the config
 import logging  # the only way to debug properly
 import datetime  # used to get the exact date and time as a string
+import time # Getting the exact timestamp
 import random  # used for randomizing things
 
 starttime = datetime.datetime.now()  # approximately the time the program started
+starttimestamp = time.time()
 
 
 if not os.path.exists(CONFIG_DIR):  # check if the .mineshaft directory exists
@@ -86,6 +88,8 @@ else:
     "title_size" : 130, 
     "font_size" : 90, 
     "translation" : "en", 
+    "presence_id" : 923723525578166353, 
+    
     }
     
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
@@ -181,6 +185,11 @@ from index.themes import MINESHAFT_DEFAULT_THEME, MINESHAFT_SUBMENU_THEME
 
 logging.info("imported index")
 
+
+import pypresence
+
+logging.info("Imported pypresence")
+
 # translation function
 _ = lang.get
 logging.debug("Created alias of lang.get as _")
@@ -251,7 +260,18 @@ class Mineshaft:
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         logging.info(f"Menu initialized ({self.menu})")
         # TODO: Add music to menu
-
+        
+        self._presence_init()
+    
+    def _presence_init(self):
+        try:
+            self.RPC = pypresence.Presence(config["presence_id"])  # Initialize the client class
+            self.RPC.connect() # Start the handshake loop
+            
+            self.RPC.update(state="Coding the rich presence", details="Testing the presence out", small_image="winter", large_image="winter",  buttons=[{"label":"Visit Mineshaft Website",  "url":"https://www.mineshaft.ml"}],  start=starttimestamp)
+        except:
+            logging.warning("Could not initialize Discord rich presence, skipping.")
+    
     @staticmethod
     def _pygame_init():
         """Initialize Pygame"""
@@ -588,6 +608,11 @@ class Mineshaft:
                 logging.debug(f"Screen is resized to {event.w}x{event.h}")
             elif event.type == pygame.QUIT:  # the user clicked the quit button
                 logging.info("Quitting, goodbye!")
+                try:
+                    self.RPC.clear()
+                    self.RPC.close()
+                except:
+                    pass
                 sys.exit(pygame.quit())  # safely quit the program
 
         if self.menu.is_enabled():  # the  menu is enabled

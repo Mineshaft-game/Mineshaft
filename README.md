@@ -34,6 +34,7 @@ Mineshaft uses these Python libraries:
 - [python-lang](https://pypi.org/project/python-lang)
 - [configparser](https://pypi.org/project/configparser/)
 - [StoryScript](https://github.com/StoryScriptOrg/StoryScript)
+- [PyPresence](https://pypi.org/project/pypresence)
 
 Upcoming and not required:
 - [lupa](https://pypi.org/project/lupa) (for upcoming lua API)
