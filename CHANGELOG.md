@@ -1,3 +1,10 @@
+### ms-241221
+* Add discord RPC
+* Use pickle for data saving
+* add additional menus
+* Remove Herobrine
+
+
 ### ms-121221
 * Add logos of Double Fractal and partners show up at start screen
 * Now if Mineshaft is imported as a module it won't launch itself straight out.
