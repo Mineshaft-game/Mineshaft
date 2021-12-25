@@ -37,7 +37,7 @@ However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNIN
 
 """
 
-__version__ = "ms-121221"
+__version__ = "ms-241221"
 __author__ = "Alexey Pavlov"
 __credits__ = "All contributors, see __doc__ for the project page"
 
@@ -51,7 +51,7 @@ import sys  # used for quitting the Python environment without breaking anything
 import pickle  # parsing the config
 import logging  # the only way to debug properly
 import datetime  # used to get the exact date and time as a string
-import time # Getting the exact timestamp
+import time  # Getting the exact timestamp
 import random  # used for randomizing things
 
 starttime = datetime.datetime.now()  # approximately the time the program started
@@ -64,7 +64,9 @@ if not os.path.exists(CONFIG_DIR):  # check if the .mineshaft directory exists
 if os.path.exists(
     os.path.join(CONFIG_DIR, CONFIG_FILE)
 ):  # check if the configuration file exists
-    config = pickle.load(open(os.path.join(CONFIG_DIR, CONFIG_FILE),  "rb"))  # if yes, then read from it
+    config = pickle.load(
+        open(os.path.join(CONFIG_DIR, CONFIG_FILE), "rb")
+    )  # if yes, then read from it
 
 else:
     print(  # if not, print the warnings and create the config
@@ -75,27 +77,26 @@ else:
     [WARNING] Note that the paths are absolute."
     )
     defconfig = {
-    "showdebug" : False, 
-    "showfps" : False, 
-    "showpygame" : False, 
-    "showframedebug" : False, 
-    "height" : 600, 
-    "width" : 850, 
-    "name" : "Mineshaft", 
-    "sdl_centered" : True, 
-    "panorama_enabled" : True, 
-    "fps" : -1, 
-    "title_size" : 130, 
-    "font_size" : 90, 
-    "translation" : "en", 
-    "presence_id" : 923723525578166353, 
-    
+        "showdebug": False,
+        "showfps": False,
+        "showpygame": False,
+        "showframedebug": False,
+        "height": 600,
+        "width": 850,
+        "name": "Mineshaft",
+        "sdl_centered": True,
+        "panorama_enabled": True,
+        "fps": -1,
+        "title_size": 130,
+        "font_size": 90,
+        "translation": "en",
+        "presence_id": 923723525578166353,
     }
-    
+
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
-        pickle.dump(defconfig,  dumpfile)
-    
-    with open(os.path.join(CONFIG_DIR,  CONFIG_FILE),  "rb") as openfile:
+        pickle.dump(defconfig, dumpfile)
+
+    with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "rb") as openfile:
         config = pickle.load(openfile)
 
 if not os.path.exists(
@@ -213,7 +214,7 @@ def lang_not_found(s):
 
 def save_config():
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE)) as file:
-        pickle.dump(config,  file)
+        pickle.dump(config, file)
 
 
 def set_config(key: str, value):
@@ -260,18 +261,34 @@ class Mineshaft:
         self._menu_init(WIDTH, HEIGHT)  # initialize the menu
         logging.info(f"Menu initialized ({self.menu})")
         # TODO: Add music to menu
-        
+
         self._presence_init()
-    
+
     def _presence_init(self):
         try:
-            self.RPC = pypresence.Presence(config["presence_id"])  # Initialize the client class
-            self.RPC.connect() # Start the handshake loop
-            
-            self.RPC.update(state="In menu", details="Looking at panorama", small_image="winter", large_image="winter",  buttons=[{"label":"Visit Mineshaft Website",  "url":"https://www.mineshaft.ml"}],  start=starttimestamp)
+            self.RPC = pypresence.Presence(
+                config["presence_id"]
+            )  # Initialize the client class
+            self.RPC.connect()  # Start the handshake loop
+
+            self.RPC_names = ["dirt", "grass", "bedrock", "stone"]
+
+            self.RPC.update(
+                state="In menu",
+                details="Looking at panorama",
+                small_image=random.choice(self.RPC_names),
+                large_image="winter",
+                buttons=[
+                    {
+                        "label": "Visit Mineshaft Website",
+                        "url": "https://www.mineshaft.ml",
+                    }
+                ],
+                start=starttimestamp,
+            )
         except:
             logging.warning("Could not initialize Discord rich presence, skipping.")
-    
+
     @staticmethod
     def _pygame_init():
         """Initialize Pygame"""
@@ -422,7 +439,6 @@ class Mineshaft:
             lang.select(translation)
             logging.info(f"{translation.title()} translation is selected")
 
-
     def _menu_init(self, width, height):
         """Initialize the menu"""
         self.menu = pygame_menu.Menu(  # set up the menu
@@ -538,7 +554,7 @@ class Mineshaft:
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
-            align=pygame_menu.locals.ALIGN_LEFT, 
+            align=pygame_menu.locals.ALIGN_LEFT,
         )
         self.settings_submenu.add.button(
             "Back",
@@ -550,8 +566,6 @@ class Mineshaft:
         )
 
         self.settings_submenu.disable()
-        
-        
 
     def _submenu_settings_display_init(self, width, height):
 
@@ -580,7 +594,7 @@ class Mineshaft:
             range_text_value_tick_color=WHITE,
             slider_text_value_color=WHITE,
             slider_text_value_enabled=True,
-            range_text_value_color=WHITE, 
+            range_text_value_color=WHITE,
         )
 
         self.settings_submenu_display.add.button(
@@ -593,7 +607,6 @@ class Mineshaft:
         )
 
         self.settings_submenu_display.disable()
-        
 
     def update_game(self):
         """Update the game"""
