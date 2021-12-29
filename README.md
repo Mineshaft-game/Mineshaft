@@ -8,8 +8,7 @@
 [![](https://img.shields.io/badge/Pygame-2.0.1%2B-yellowgreen)](https://pygame.org)
 [![](https://img.shields.io/badge/Python%20-3.7%2B-yellow)](https://python.org)
 [![Join the chat at https://gitter.im/Mineshaft-game/Mineshaft](https://badges.gitter.im/Mineshaft-game/Mineshaft.svg)](https://gitter.im/Mineshaft-game/Mineshaft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Mineshaft-game_Mineshaft)](https://sonarcloud.io/summary/new_code?id=Mineshaft-game_Mineshaft)
-
+[![DeepSource](https://deepsource.io/gh/Mineshaft-game/Mineshaft.svg/?label=active+issues&show_trend=true&token=NocmOznE__Uv6VwKc1CybJK8)](https://deepsource.io/gh/Mineshaft-game/Mineshaft/?ref=repository-badge)
 # Mineshaft
 
 [![Pygame Powered!](https://github.com/pygame/pygame/blob/main/docs/pygame_powered.png)](https://pygame.org) 

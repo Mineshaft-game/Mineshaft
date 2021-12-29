@@ -1,0 +1,2 @@
+language = "python3"
+run = "git submodule init && git submodule update && pip3 install -r requirements.txt && python3 main.py"
