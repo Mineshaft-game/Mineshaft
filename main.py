@@ -42,7 +42,7 @@ __author__ = "Alexey Pavlov"
 __credits__ = "All contributors, see __doc__ for the project page"
 
 CONFIG_DIR = ".mineshaft"
-CONFIG_FILE = "mineshaft.conf"
+CONFIG_FILE = "config.dat"
 
 # HACK: beautify imports, they're very ugly
 # TODO: Sort the imports alphabetically
@@ -53,6 +53,7 @@ import logging  # the only way to debug properly
 import datetime  # used to get the exact date and time as a string
 import time  # Getting the exact timestamp
 import random  # used for randomizing things
+import traceback
 
 starttime = datetime.datetime.now()  # approximately the time the program started
 starttimestamp = time.time()
@@ -265,6 +266,7 @@ class Mineshaft:
         self._presence_init()
 
     def _presence_init(self):
+        """Initialze the presence."""
         try:
             self.RPC = pypresence.Presence(
                 config["presence_id"]
@@ -288,6 +290,8 @@ class Mineshaft:
             )
         except:
             logging.warning("Could not initialize Discord rich presence, skipping.")
+            logging.warning("The error was: " + traceback.format_exc())
+            logging.info("This can probably be ignored, if Discord is not present or there is no internet connection.")
 
     @staticmethod
     def _pygame_init():
@@ -333,6 +337,7 @@ class Mineshaft:
 
         df1 = pygame.image.load(os.path.join("assets", "logo", "df-1.png"))
         df2 = pygame.image.load(os.path.join("assets", "logo", "df-2.png"))
+        logging.debug("Load Double Fractal title screen images")
 
         df1_pos = -105
         df2_pos = 500
@@ -540,6 +545,7 @@ class Mineshaft:
         # TODO: Make this an actual singleplayer menu
 
     def _submenu_settings_init(self, width, height):
+        """Initialize the settings submenu"""
 
         self.settings_submenu = pygame_menu.Menu(
             "", width, height, theme=MINESHAFT_SUBMENU_THEME
@@ -566,9 +572,11 @@ class Mineshaft:
         )
 
         self.settings_submenu.disable()
+        
+        logging.debug("Disabled the settings submenu")
 
     def _submenu_settings_display_init(self, width, height):
-
+        """The function that initializes the settings>display menu"""
         self.settings_submenu_display = pygame_menu.Menu(
             "", width, height, theme=MINESHAFT_SUBMENU_THEME
         )
@@ -690,7 +698,12 @@ def main():
         logging.debug("Update the game (Events)")
         game.draw_game()  # draw the game
         logging.debug("Drew the game")
+        raise Exception("Test")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except:
+        logging.critical("An error occured. The full output is: " + traceback.format_exc())
+        sys.exit(pygame.quit())
