@@ -3,7 +3,7 @@ from libmineshaft.blocks import Block, MultipleStateBlock, NoIDBlock
 
 class Air(Block):
     id = 0
-    image = ["assets", "images", "blocks", "air.png"]
+    image = ["textures", "blocks", "air.png"]
     resistance = -1
     name = "Air"
     falls = False
@@ -11,7 +11,7 @@ class Air(Block):
 
 
 class StoneBlock(NoIDBlock):
-    image = ["assets", "images", "blocks", "stone.png"]
+    image = ["textures", "blocks", "stone.png"]
     resistance = 10
     name = "Stone"
     falls = False
@@ -25,7 +25,7 @@ class Stone(MultipleStateBlock):
 
 class Grass(Block):
     id = 2
-    image = ["assets", "images", "blocks", "grass.png"]
+    image = ["textures", "blocks", "grass.png"]
     resistance = 0
     name = "Grass Block"
     falls = False
@@ -34,7 +34,7 @@ class Grass(Block):
 
 class Dirt(Block):
     id = 3
-    image = ["assets", "images", "blocks", "dirt.png"]
+    image = ["textures", "blocks", "dirt.png"]
     resistance = 0
     name = "Dirt"
     fallse = False
@@ -43,7 +43,7 @@ class Dirt(Block):
 
 class Cobblestone(Block):
     id = 4
-    image = ["assets", "images", "blocks", "cobblestone.png"]
+    image = ["textures", "blocks", "cobblestone.png"]
     resistance = 10
     falls = False
     breaktime = 15
@@ -51,7 +51,7 @@ class Cobblestone(Block):
 
 class Bedrock(Block):
     id = 7
-    image = ["assets", "images", "blocks", "bedrock.png"]
+    image = ["textures", "blocks", "bedrock.png"]
     resistance = -1
     name = "Bedrock"
     falls = False

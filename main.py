@@ -92,6 +92,7 @@ else:
         "font_size": 90,
         "translation": "en",
         "presence_id": 923723525578166353,
+        "assets_dir" : "assets"
     }
 
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
@@ -168,6 +169,7 @@ logging.info("Import python_lang and pygame_menu successful")
 
 # rendering
 from render import Engine
+import render
 import render.wrapper.music as music
 
 logging.debug("Imported Engine from ./render")
@@ -276,8 +278,8 @@ class Mineshaft:
             self.RPC_names = ["dirt", "grass", "bedrock", "stone"]
 
             self.RPC.update(
-                state="In menu",
-                details="Looking at panorama",
+                state="RenderMite version " + render.__version__,
+                details=__version__,
                 small_image=random.choice(self.RPC_names),
                 large_image="winter",
                 buttons=[
@@ -311,7 +313,7 @@ class Mineshaft:
 
     def _render_init(self):
         """Initialize the rendering engine"""
-        self.engine = Engine(blockindex=blockindex)
+        self.engine = Engine(blockindex=blockindex,  assets_dir=config["assets_dir"])
         # TODO: Make it render
 
     def _menu_sound_init(self):
@@ -698,7 +700,6 @@ def main():
         logging.debug("Update the game (Events)")
         game.draw_game()  # draw the game
         logging.debug("Drew the game")
-        raise Exception("Test")
 
 
 if __name__ == "__main__":
