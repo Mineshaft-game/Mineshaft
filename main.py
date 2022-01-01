@@ -92,7 +92,7 @@ else:
         "font_size": 90,
         "translation": "en",
         "presence_id": 923723525578166353,
-        "assets_dir" : "assets"
+        "assets_dir": "assets",
     }
 
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
@@ -293,7 +293,9 @@ class Mineshaft:
         except:
             logging.warning("Could not initialize Discord rich presence, skipping.")
             logging.warning("The error was: " + traceback.format_exc())
-            logging.info("This can probably be ignored, if Discord is not present or there is no internet connection.")
+            logging.info(
+                "This can probably be ignored, if Discord is not present or there is no internet connection."
+            )
 
     @staticmethod
     def _pygame_init():
@@ -313,7 +315,7 @@ class Mineshaft:
 
     def _render_init(self):
         """Initialize the rendering engine"""
-        self.engine = Engine(blockindex=blockindex,  assets_dir=config["assets_dir"])
+        self.engine = Engine(blockindex=blockindex, assets_dir=config["assets_dir"])
         # TODO: Make it render
 
     def _menu_sound_init(self):
@@ -574,7 +576,7 @@ class Mineshaft:
         )
 
         self.settings_submenu.disable()
-        
+
         logging.debug("Disabled the settings submenu")
 
     def _submenu_settings_display_init(self, width, height):
@@ -706,5 +708,7 @@ if __name__ == "__main__":
     try:
         main()
     except:
-        logging.critical("An error occured. The full output is: " + traceback.format_exc())
+        logging.critical(
+            "An error occured. The full output is: " + traceback.format_exc()
+        )
         sys.exit(pygame.quit())
