@@ -15,7 +15,7 @@ Github organization: https://github.com/Mineshaft-game
 
 This program is licensed under the Mineshaft License v0.2
 The Mineshaft License should have come provided with this program. If not, read it online at github.com/Mineshaft-game/Mineshaft
-Copyright 2021 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
+Copyright 2021-2022 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
 Copyright 2021 Sakurai Mayu/Mayu Sakurai
 This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jibber-jabber.
 
@@ -74,8 +74,8 @@ else:
         f"\
     [WARNING] Can't find {CONFIG_DIR}/{CONFIG_FILE},\n\
     [WARNING] creating one instead. Be careful, this configuration\n\
-    [WARNING] may be broken or outdated. This may happen at the first run.\n\
-    [WARNING] Note that the paths are absolute."
+    [WARNING] may be broken or outdated. This happens at the first run.\n\
+    [WARNING] When a directory should be created. Note that the paths are absolute."
     )
     defconfig = {
         "showdebug": False,
@@ -257,6 +257,8 @@ class Mineshaft:
 
         music.init_music()
 
+        logging.info("Music wrapper initialized.")
+
         self._menu_sound_init()
 
         self.show_lusteria_intro()
@@ -290,6 +292,9 @@ class Mineshaft:
                 ],
                 start=starttimestamp,
             )
+
+            logging.info("Discord rich presence initialized")
+
         except:
             logging.warning("Could not initialize Discord rich presence, skipping.")
             logging.warning("The error was: " + traceback.format_exc())
