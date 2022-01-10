@@ -13,8 +13,8 @@ Official game wiki: https://mineshaft.fandom.com
 Github organization: https://github.com/Mineshaft-game
 
 
-This program is licensed under the Mineshaft License v0.2
-The Mineshaft License should have come provided with this program. If not, read it online at github.com/Mineshaft-game/Mineshaft
+This program is licensed under the MIT License with additional restrictions.
+The MIT License (With additional restrictions) should have come provided with this program. If not, read it online at github.com/Mineshaft-game/Mineshaft
 Copyright 2021-2022 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
 Copyright 2021 Sakurai Mayu/Mayu Sakurai
 This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jibber-jabber.
