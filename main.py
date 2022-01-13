@@ -17,7 +17,6 @@ This program is licensed under the MIT License with additional restrictions.
 The MIT License (With additional restrictions) should have come provided with this program. If not, read it online at github.com/Mineshaft-game/Mineshaft
 Copyright 2021-2022 Alexey "LEHAtupointow" Pavlov <pezleha@gmail.com>
 Copyright 2021 Sakurai Mayu/Mayu Sakurai
-This program comes with ABSOLUTELY NO WARRANTY, OF ANY KIND, and other legal jibber-jabber.
 
 More information about Minecraft can be found online at http://wikipedia.org/wiki/Minecraft or on the official wiki: http://minecraft.fandom.com
 

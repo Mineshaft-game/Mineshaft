@@ -3,3 +3,4 @@
 **/logs
 .libms_history
 /.mineshaft
+*.xcf
