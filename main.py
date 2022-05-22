@@ -53,6 +53,7 @@ import datetime  # used to get the exact date and time as a string
 import time  # Getting the exact timestamp
 import random  # used for randomizing things
 import traceback
+import pynbt
 
 starttime = datetime.datetime.now()  # approximately the time the program started
 starttimestamp = time.time()
@@ -77,21 +78,21 @@ else:
     [WARNING] When a directory should be created. Note that the paths are absolute."
     )
     defconfig = {
-        "showdebug": False,
-        "showfps": False,
-        "showpygame": False,
-        "showframedebug": False,
-        "height": 600,
-        "width": 850,
-        "name": "Mineshaft",
-        "sdl_centered": True,
-        "panorama_enabled": True,
-        "fps": -1,
-        "title_size": 130,
-        "font_size": 90,
-        "translation": "en",
-        "presence_id": 923723525578166353,
-        "assets_dir": "assets",
+        "showdebug": pynbt.TAG_INT(0),
+        "showfps":  pynbt.TAG_INT(0),
+        "showpygame":  pynbt.TAG_INT(0),
+        "showframedebug":  pynbt.TAG_INT(0),
+        "height": pynbt.TAG_LONG(600),
+        "width": pynbt.TAG_LONG(850),
+        "name": pynbt.TAG_STR("Mineshaft"),
+        "sdl_centered":  pynbt.TAG_INT(1),
+        "panorama_enabled":  pynbt.TAG_INT(1),
+        "fps": pynbt.TAG_LONG(-1),
+        "title_size": pynbt.TAG_LONG(130),
+        "font_size": pynbt.TAG_LONG(90),
+        "translation": pynbt.TAG_STR("en"),
+        "presence_id": pynbt.TAG_LONG(923723525578166353),
+        "assets_dir": pynbt.TAG_STR("assets"),
     }
 
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
@@ -112,7 +113,7 @@ if config["showdebug"]:
 else:
     logging.basicConfig(
         filename=os.path.join(
-            CONFIG_DIR, "logs", str(starttime.strftime("%Y-%m-%d %H%M%S")) + ".log"
+            CONFIG_DIR, "logs", str(starttime.strftime("%Y-%m-%d--%H%M%S")) + ".log"
         ),
         level=logging.INFO,
         format=" %(asctime)s [%(levelname)s] -  %(message)s",
@@ -249,6 +250,11 @@ class Mineshaft:
         logging.info(f"Surface is created ({self.screen})")
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
+        self.blocks_sheet = pygame.image.load(os.path.join("assets", "textures",  "blocks.png" ))
+        pygame.display.set_icon(  # set the icon
+            pygame.transform.scale(self.blocks_sheet.subsurface(blockindex[2].imagecoords,  (16, 16)),  (128, 128))
+        )
+        logging.debug("Icon is set")
 
         self.show_fps = show_fps
 
@@ -267,7 +273,7 @@ class Mineshaft:
         # TODO: Add music to menu
 
         self._presence_init()
-
+        
     def _presence_init(self):
         """Initialze the presence."""
         try:
@@ -286,7 +292,7 @@ class Mineshaft:
                 buttons=[
                     {
                         "label": "Visit Mineshaft Website",
-                        "url": "https://www.mineshaft.ml",
+                        "url": "https://github.com/mineshaft-game",
                     }
                 ],
                 start=starttimestamp,
@@ -301,18 +307,14 @@ class Mineshaft:
                 "This can probably be ignored, if Discord is not present or there is no internet connection."
             )
 
-    @staticmethod
-    def _pygame_init():
+    def _pygame_init(self):
         """Initialize Pygame"""
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
         pygame.display.set_caption(
             _("Mineshaft"), _("Mineshaft")
         )  # the display caption
-        pygame.display.set_icon(  # set the icon
-            pygame.image.load(os.path.join("assets", "textures", "blocks", "grass.png"))
-        )
-        logging.debug("Icon is set")
+        
         # FIXME: It is still visible in pygame-menu
         pygame.mouse.set_visible(False)  # disable mouse Visibility
         logging.debug("Mouse is invisible")
