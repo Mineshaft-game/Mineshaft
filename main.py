@@ -30,7 +30,7 @@ Contribution style:
     * XXX: Major problem.
     * NOTE: A note.
 Most text editor plugins/IDEs should automatically import them into tasks.
-However, some of them like Eric, import only some (e.g. only TODO, FIXME, WARNING and NOTE).
+However, some of them like Eric, import only a few (e.g. only TODO, FIXME, WARNING and NOTE).
 
 
 
@@ -250,7 +250,7 @@ class Mineshaft:
         logging.info(f"Surface is created ({self.screen})")
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
-        self.blocks_sheet = pygame.image.load(os.path.join("assets", "textures",  "blocks.png" ))
+        self.blocks_sheet = pygame.image.load(os.path.join("assets", "textures",  "terrain.png" ))
         pygame.display.set_icon(  # set the icon
             pygame.transform.scale(self.blocks_sheet.subsurface(blockindex[2].imagecoords,  (16, 16)),  (128, 128))
         )
@@ -273,6 +273,7 @@ class Mineshaft:
         # TODO: Add music to menu
 
         self._presence_init()
+        self.position=[0, 0]
         
     def _presence_init(self):
         """Initialze the presence."""
@@ -551,7 +552,7 @@ class Mineshaft:
     def _menu_singleplayer(self):
         """Enter the singleplayer menu"""
         self.menu.toggle()
-        self.world = gen.generateWorld()
+        self.world = gen.generateSuperflatWorld()
         # TODO: Make this an actual singleplayer menu
 
     def _submenu_settings_init(self, width, height):
@@ -664,6 +665,19 @@ class Mineshaft:
 
             if not music.get_busy():
                 music.queue_music(random.choice(MENU))
+        else:
+            print("e")
+            for event in pygame.event.get():
+
+                if event.type == pygame.KEYDOWN:
+
+                    if event.key == pygame.K_w:
+                        self.position[0]+=1
+
+                    elif event.key == pygame.K_d:
+                        self.position[1]-=1
+                        print("d")
+    
 
         if self.settings_submenu.is_enabled():
             window_size = self.screen.get_size()  # get the surface size
@@ -685,7 +699,7 @@ class Mineshaft:
             logging.debug("Draw the menu")
 
         else:
-            self.engine.render(self.screen, self.world)
+            self.engine.render(self.screen, self.world,  pos=self.position)
 
         if self.show_fps:
             fps_text = pygame.font.Font(minecraftfont, 50).render(
