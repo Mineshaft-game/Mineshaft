@@ -65,7 +65,7 @@ if not os.path.exists(CONFIG_DIR):  # check if the .mineshaft directory exists
 if os.path.exists(
     os.path.join(CONFIG_DIR, CONFIG_FILE)
 ):  # check if the configuration file exists
-    config = pickle.load(
+    config = pynbt.NBTFile(
         open(os.path.join(CONFIG_DIR, CONFIG_FILE), "rb")
     )  # if yes, then read from it
 
@@ -78,38 +78,37 @@ else:
     [WARNING] When a directory should be created. Note that the paths are absolute."
     )
     defconfig = {
-        "showdebug": pynbt.TAG_INT(0),
-        "showfps":  pynbt.TAG_INT(0),
-        "showpygame":  pynbt.TAG_INT(0),
-        "showframedebug":  pynbt.TAG_INT(0),
-        "height": pynbt.TAG_LONG(600),
-        "width": pynbt.TAG_LONG(850),
-        "name": pynbt.TAG_STR("Mineshaft"),
-        "sdl_centered":  pynbt.TAG_INT(1),
-        "panorama_enabled":  pynbt.TAG_INT(1),
-        "fps": pynbt.TAG_LONG(-1),
-        "title_size": pynbt.TAG_LONG(130),
-        "font_size": pynbt.TAG_LONG(90),
-        "translation": pynbt.TAG_STR("en"),
-        "presence_id": pynbt.TAG_LONG(923723525578166353),
-        "assets_dir": pynbt.TAG_STR("assets"),
-    }
+            "showdebug": pynbt.TAG_Int(0),
+            "showfps":  pynbt.TAG_Int(0),
+            "showpygame":  pynbt.TAG_Int(0),
+            "showframedebug":  pynbt.TAG_Int(0),
+            "height": pynbt.TAG_Long(600),
+            "width": pynbt.TAG_Long(850),
+            "name": pynbt.TAG_String("Mineshaft"),
+            "sdl_centered":  pynbt.TAG_Int(1),
+            "panorama_enabled":  pynbt.TAG_Int(1),
+            "fps": pynbt.TAG_Long(-1),
+            "title_size": pynbt.TAG_Long(130),
+            "font_size": pynbt.TAG_Long(90),
+            "translation": pynbt.TAG_String("en"),
+            "presence_id": pynbt.TAG_Long(923723525578166353),
+            "assets_dir": pynbt.TAG_String("assets"),
+        }
 
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
-        pickle.dump(defconfig, dumpfile)
+        pynbt.NBTFile(value=defconfig).save(dumpfile)
 
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "rb") as openfile:
-        config = pickle.load(openfile)
+        config = pynbt.NBTFile(openfile)
 
 if not os.path.exists(
     os.path.join(CONFIG_DIR, "logs")
 ):  # check if the logging folder exists
     os.mkdir(os.path.join(CONFIG_DIR, "logs"))
 
-if config["showdebug"]:
+if config["showdebug"].value==1:
     logging.basicConfig(
-        level=logging.DEBUG, format=" %(asctime)s [%(levelname)s] -  %(message)s"
-    )
+        level=logging.DEBUG, format=" %(asctime)s [%(levelname)s] -  %(message)s") 
 else:
     logging.basicConfig(
         filename=os.path.join(
@@ -133,22 +132,22 @@ logging.info(
     )
 )
 
-HEIGHT = config["height"]
-WIDTH = config["width"]
+HEIGHT = int(config["height"].value)
+WIDTH = int(config["width"].value)
 
-font_size = config["font_size"]
+font_size = int(config["font_size"].value)
 
-translation = config["translation"]
+translation = str(config["translation"].value)
 
-show_fps = config["showfps"]
+show_fps = int(config["showfps"].value)
 
-panorama_enabled = config["panorama_enabled"]
+panorama_enabled = int(config["panorama_enabled"].value)
 
-if not config["showpygame"]:
+if not int(config["showpygame"].value) == 0:
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
     logging.info("Pygame support message disabled")
 
-if config["sdl_centered"]:
+if int(config["sdl_centered"].value)==1:
     os.environ[
         "SDL_VIDEO_CENTERED"
     ] = "1"  # the environment variable that fixes issues on some platforms
@@ -279,7 +278,7 @@ class Mineshaft:
         """Initialze the presence."""
         try:
             self.RPC = pypresence.Presence(
-                config["presence_id"]
+                int(config["presence_id"].value)
             )  # Initialize the client class
             self.RPC.connect()  # Start the handshake loop
 
@@ -322,7 +321,7 @@ class Mineshaft:
 
     def _render_init(self):
         """Initialize the rendering engine"""
-        self.engine = Engine(blockindex=blockindex, assets_dir=config["assets_dir"])
+        self.engine = Engine(blockindex=blockindex, assets_dir=str(config["assets_dir"]))
         # TODO: Make it render
 
     def _menu_sound_init(self):
