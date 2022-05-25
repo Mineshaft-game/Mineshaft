@@ -5,3 +5,4 @@ libmineshaft>=0.1.4
 python-lang>=1.0.0
 storyscript>=0.0.3
 pypresence
+pynbt

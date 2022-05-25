@@ -43,7 +43,10 @@ class Dirt(Block):
 
 class Cobblestone(Block):
     id = 4
-    imagecoords = (0, 0) # Temporary placeholder, since there is no cobble texture right now
+    imagecoords = (
+        0,
+        0,
+    )  # Temporary placeholder, since there is no cobble texture right now
     resistance = 10
     falls = False
     breaktime = 15
@@ -58,11 +61,4 @@ class Bedrock(Block):
     breaktime = -1
 
 
-BLOCKS = {
-    0: Air,
-    1: Stone, 
-    2: Grass,
-    3: Dirt, 
-    4: Cobblestone,  
-    7: Bedrock
-    }
+BLOCKS = {0: Air, 1: Stone, 2: Grass, 3: Dirt, 4: Cobblestone, 7: Bedrock}

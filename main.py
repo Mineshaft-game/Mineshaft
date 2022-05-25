@@ -78,22 +78,22 @@ else:
     [WARNING] When a directory should be created. Note that the paths are absolute."
     )
     defconfig = {
-            "showdebug": pynbt.TAG_Int(0),
-            "showfps":  pynbt.TAG_Int(0),
-            "showpygame":  pynbt.TAG_Int(0),
-            "showframedebug":  pynbt.TAG_Int(0),
-            "height": pynbt.TAG_Long(600),
-            "width": pynbt.TAG_Long(850),
-            "name": pynbt.TAG_String("Mineshaft"),
-            "sdl_centered":  pynbt.TAG_Int(1),
-            "panorama_enabled":  pynbt.TAG_Int(1),
-            "fps": pynbt.TAG_Long(-1),
-            "title_size": pynbt.TAG_Long(130),
-            "font_size": pynbt.TAG_Long(90),
-            "translation": pynbt.TAG_String("en"),
-            "presence_id": pynbt.TAG_Long(923723525578166353),
-            "assets_dir": pynbt.TAG_String("assets"),
-        }
+        "showdebug": pynbt.TAG_Int(0),
+        "showfps": pynbt.TAG_Int(0),
+        "showpygame": pynbt.TAG_Int(0),
+        "showframedebug": pynbt.TAG_Int(0),
+        "height": pynbt.TAG_Long(600),
+        "width": pynbt.TAG_Long(850),
+        "name": pynbt.TAG_String("Mineshaft"),
+        "sdl_centered": pynbt.TAG_Int(1),
+        "panorama_enabled": pynbt.TAG_Int(1),
+        "fps": pynbt.TAG_Long(-1),
+        "title_size": pynbt.TAG_Long(130),
+        "font_size": pynbt.TAG_Long(90),
+        "translation": pynbt.TAG_String("en"),
+        "presence_id": pynbt.TAG_Long(923723525578166353),
+        "assets_dir": pynbt.TAG_String("assets"),
+    }
 
     with open(os.path.join(CONFIG_DIR, CONFIG_FILE), "wb") as dumpfile:
         pynbt.NBTFile(value=defconfig).save(dumpfile)
@@ -106,9 +106,10 @@ if not os.path.exists(
 ):  # check if the logging folder exists
     os.mkdir(os.path.join(CONFIG_DIR, "logs"))
 
-if config["showdebug"].value==1:
+if config["showdebug"].value == 1:
     logging.basicConfig(
-        level=logging.DEBUG, format=" %(asctime)s [%(levelname)s] -  %(message)s") 
+        level=logging.DEBUG, format=" %(asctime)s [%(levelname)s] -  %(message)s"
+    )
 else:
     logging.basicConfig(
         filename=os.path.join(
@@ -147,7 +148,7 @@ if not int(config["showpygame"].value) == 0:
     os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
     logging.info("Pygame support message disabled")
 
-if int(config["sdl_centered"].value)==1:
+if int(config["sdl_centered"].value) == 1:
     os.environ[
         "SDL_VIDEO_CENTERED"
     ] = "1"  # the environment variable that fixes issues on some platforms
@@ -249,9 +250,14 @@ class Mineshaft:
         logging.info(f"Surface is created ({self.screen})")
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
-        self.blocks_sheet = pygame.image.load(os.path.join("assets", "textures",  "terrain.png" ))
+        self.blocks_sheet = pygame.image.load(
+            os.path.join("assets", "textures", "terrain.png")
+        )
         pygame.display.set_icon(  # set the icon
-            pygame.transform.scale(self.blocks_sheet.subsurface(blockindex[2].imagecoords,  (16, 16)),  (128, 128))
+            pygame.transform.scale(
+                self.blocks_sheet.subsurface(blockindex[2].imagecoords, (16, 16)),
+                (128, 128),
+            )
         )
         logging.debug("Icon is set")
 
@@ -272,8 +278,8 @@ class Mineshaft:
         # TODO: Add music to menu
 
         self._presence_init()
-        self.position=[0, 0]
-        
+        self.position = [0, 0]
+
     def _presence_init(self):
         """Initialze the presence."""
         try:
@@ -314,14 +320,16 @@ class Mineshaft:
         pygame.display.set_caption(
             _("Mineshaft"), _("Mineshaft")
         )  # the display caption
-        
+
         # FIXME: It is still visible in pygame-menu
         pygame.mouse.set_visible(False)  # disable mouse Visibility
         logging.debug("Mouse is invisible")
 
     def _render_init(self):
         """Initialize the rendering engine"""
-        self.engine = Engine(blockindex=blockindex, assets_dir=str(config["assets_dir"]))
+        self.engine = Engine(
+            blockindex=blockindex, assets_dir=str(config["assets_dir"])
+        )
         # TODO: Make it render
 
     def _menu_sound_init(self):
@@ -671,12 +679,11 @@ class Mineshaft:
                 if event.type == pygame.KEYDOWN:
 
                     if event.key == pygame.K_w:
-                        self.position[0]+=1
+                        self.position[0] += 1
 
                     elif event.key == pygame.K_d:
-                        self.position[1]-=1
+                        self.position[1] -= 1
                         print("d")
-    
 
         if self.settings_submenu.is_enabled():
             window_size = self.screen.get_size()  # get the surface size
@@ -698,7 +705,7 @@ class Mineshaft:
             logging.debug("Draw the menu")
 
         else:
-            self.engine.render(self.screen, self.world,  pos=self.position)
+            self.engine.render(self.screen, self.world, pos=self.position)
 
         if self.show_fps:
             fps_text = pygame.font.Font(minecraftfont, 50).render(
