@@ -4,3 +4,5 @@
 .libms_history
 /.mineshaft
 *.xcf
+main.build
+main.dist
