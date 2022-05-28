@@ -171,6 +171,7 @@ logging.info("Import python_lang and pygame_menu successful")
 from render import Engine
 import render
 import render.wrapper.music as music
+import render.wrapper.image as image
 
 logging.debug("Imported Engine from ./render")
 
@@ -181,7 +182,7 @@ logging.debug("Imported world generator")
 
 
 # index
-from index.blocks import BLOCKS as blockindex
+from index.blocks import BLOCKS as blockindex,  load_images
 from index.font import minecraftfont
 from index.lang import translations
 from index.music import MENU
@@ -238,6 +239,7 @@ class Mineshaft:
         """Initialize the class"""
         self._lang_init()  # initialize the translations
         self._pygame_init()  # initialize pygame
+        self.image_index = load_images(str(config["assets_dir"].value),  image,  (16, 16))
         self._render_init()
         self.currentpanoramapos = [0, 0]  # set up panorama position
 
@@ -279,6 +281,7 @@ class Mineshaft:
 
         self._presence_init()
         self.position = [0, 0]
+        
 
     def _presence_init(self):
         """Initialze the presence."""
@@ -328,7 +331,7 @@ class Mineshaft:
     def _render_init(self):
         """Initialize the rendering engine"""
         self.engine = Engine(
-            blockindex=blockindex, assets_dir=str(config["assets_dir"])
+            block_index=blockindex, image_index=self.image_index
         )
         # TODO: Make it render
 
@@ -636,6 +639,8 @@ class Mineshaft:
 
     def update_game(self):
         """Update the game"""
+        self.fps = str(int(self.clock.get_fps()))
+        logging.debug("Update fps")
         # get  the events
         events = pygame.event.get()
         # loop for every event
@@ -667,8 +672,7 @@ class Mineshaft:
             )  # make the menu safely update for every other event
             logging.debug("Updated the menu")
 
-            self.fps = str(int(self.clock.get_fps()))
-            logging.debug("Update fps")
+            
 
             if not music.get_busy():
                 music.queue_music(random.choice(MENU))

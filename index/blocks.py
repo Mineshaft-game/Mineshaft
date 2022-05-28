@@ -1,4 +1,5 @@
 from libmineshaft.blocks import Block, MultipleStateBlock, NoIDBlock
+import os
 
 
 class Air(Block):
@@ -62,3 +63,10 @@ class Bedrock(Block):
 
 
 BLOCKS = {0: Air, 1: Stone, 2: Grass, 3: Dirt, 4: Cobblestone, 7: Bedrock}
+
+def load_images(assets_dir,  wrapper_image,  scale: tuple or list) -> dict:
+    returndict = dict()
+    terrain = wrapper_image.load(os.path.join(assets_dir,  "textures",  "terrain.png"))
+    for block in BLOCKS:
+        returndict[BLOCKS[block].id] = wrapper_image.scale(wrapper_image.subsurface(terrain, BLOCKS[block].imagecoords, scale), (64, 64))
+    return returndict
