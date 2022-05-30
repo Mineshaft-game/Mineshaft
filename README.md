@@ -11,7 +11,7 @@
 [![DeepSource](https://deepsource.io/gh/Mineshaft-game/Mineshaft.svg/?label=active+issues&show_trend=true&token=NocmOznE__Uv6VwKc1CybJK8)](https://deepsource.io/gh/Mineshaft-game/Mineshaft/?ref=repository-badge)
 # Mineshaft
 
-[![Pygame Powered!](https://github.com/pygame/pygame/blob/main/docs/pygame_powered.png)](https://pygame.org) 
+[![Pygame Powered!](https://raw.githubusercontent.com/pygame/pygame/main/docs/reST/_static/pygame_powered.svg)](https://pygame.org) 
 
 ## Installation
 ### Dependencies
