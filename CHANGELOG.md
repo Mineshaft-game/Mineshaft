@@ -1,3 +1,13 @@
+### ms-270522
+* New level saving format with GZip and NBT
+* New config format
+* Remove Herobrine
+
+### ms-240522
+* Add spritesheet support
+* Use database for level saving
+* Remove Herobrine
+
 ### ms-241221
 * Add discord RPC
 * Use pickle for data saving
