@@ -1,7 +1,7 @@
 pygame>=2.0.3
 pygame-menu>=4.1.5
 screeninfo>=0.8
-libmineshaft>=0.1.4
+libmineshaft>=0.1.7rc2
 python-lang>=1.0.0
 storyscript>=0.0.3
 pypresence

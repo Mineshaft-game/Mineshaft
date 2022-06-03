@@ -182,7 +182,7 @@ logging.debug("Imported world generator")
 
 
 # index
-from index.blocks import BLOCKS as blockindex,  load_images
+from index.blocks import BLOCKS as blockindex, load_images
 from index.font import minecraftfont
 from index.lang import translations
 from index.music import MENU
@@ -239,7 +239,7 @@ class Mineshaft:
         """Initialize the class"""
         self._lang_init()  # initialize the translations
         self._pygame_init()  # initialize pygame
-        self.image_index = load_images(str(config["assets_dir"].value),  image,  (16, 16))
+        self.image_index = load_images(str(config["assets_dir"].value), image, (16, 16))
         self._render_init()
         self.currentpanoramapos = [0, 0]  # set up panorama position
 
@@ -281,7 +281,6 @@ class Mineshaft:
 
         self._presence_init()
         self.position = [0, 0]
-        
 
     def _presence_init(self):
         """Initialze the presence."""
@@ -330,9 +329,7 @@ class Mineshaft:
 
     def _render_init(self):
         """Initialize the rendering engine"""
-        self.engine = Engine(
-            block_index=blockindex, image_index=self.image_index
-        )
+        self.engine = Engine(block_index=blockindex, image_index=self.image_index)
         # TODO: Make it render
 
     def _menu_sound_init(self):
@@ -671,8 +668,6 @@ class Mineshaft:
                 events
             )  # make the menu safely update for every other event
             logging.debug("Updated the menu")
-
-            
 
             if not music.get_busy():
                 music.queue_music(random.choice(MENU))
