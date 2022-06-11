@@ -1,0 +1,15 @@
+{
+  "en":{
+    "menu.game.name" : "Mineshaft",
+    "menu.main.start" : "Start Game",
+    "menu.main.settings" : "Settings",
+    "menu.main.quit" : "Quit",
+    "rpc.render_engine.version" : "RenderMite version: ",
+    "rpc.buttons.visit" : "Visit Mineshaft Website",
+    "menu.settings.display" : "Display",
+    "menu.settings.back" : "Back",
+    "menu.settings.display.fps" : "FPS",
+    "menu.settings.display.back" : "Back",
+    "debug.fps" : "FPS: "
+  }
+}

@@ -53,6 +53,7 @@ import datetime  # used to get the exact date and time as a string
 import time  # Getting the exact timestamp
 import random  # used for randomizing things
 import traceback
+import argparse
 import pynbt
 
 starttime = datetime.datetime.now()  # approximately the time the program started
@@ -136,6 +137,17 @@ logging.info(
 HEIGHT = int(config["height"].value)
 WIDTH = int(config["width"].value)
 
+args_parser = argparse.ArgumentParser(description='Mineshaft CLI interface for specifying options through the launcher.')
+
+args_parser.add_argument('--assets', type=str)
+
+args = args_parser.parse_args()
+
+if args.assets:
+    assets_dir = args.assets
+else:
+    assets_dir = str(config["assets_dir"].value)
+
 font_size = int(config["font_size"].value)
 
 translation = str(config["translation"].value)
@@ -162,7 +174,10 @@ logging.info("Imported pygame")
 
 
 # import screeninfo # Temporarily unused
-import python_lang as lang  # used for translations
+import tools.lang as lang # used for translations
+lang.i18n.load_path.append(os.path.join(assets_dir,  "lang"))
+_ = lang.i18n.t
+
 import pygame_menu  # used for menu
 
 logging.info("Import python_lang and pygame_menu successful")
@@ -184,7 +199,6 @@ logging.debug("Imported world generator")
 # index
 from index.blocks import BLOCKS as blockindex, load_images
 from index.font import minecraftfont
-from index.lang import translations
 from index.music import MENU
 from index.themes import MINESHAFT_DEFAULT_THEME, MINESHAFT_SUBMENU_THEME
 
@@ -195,11 +209,7 @@ import pypresence
 
 logging.info("Imported pypresence")
 
-# translation function
-_ = lang.get
-logging.debug("Created alias of lang.get as _")
 
-lang_broken = False
 
 
 BLACK = (0, 0, 0)
@@ -209,11 +219,6 @@ BG_COLOR = BLACK
 
 # Helper functions
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-
-
-def lang_not_found(s):
-    """Is called when the language files aren't found"""
-    return s + "⚙"  # add hint that file is not loaded
 
 
 def save_config():
@@ -237,9 +242,8 @@ class Mineshaft:
 
     def __init__(self):  # the function called at the creation of the class
         """Initialize the class"""
-        self._lang_init()  # initialize the translations
         self._pygame_init()  # initialize pygame
-        self.image_index = load_images(str(config["assets_dir"].value), image, (16, 16))
+        self.image_index = load_images(assets_dir, image, (16, 16))
         self._render_init()
         self.currentpanoramapos = [0, 0]  # set up panorama position
 
@@ -293,13 +297,13 @@ class Mineshaft:
             self.RPC_names = ["dirt", "grass", "bedrock", "stone"]
 
             self.RPC.update(
-                state="RenderMite version " + render.__version__,
+                state=_("rpc.render_engine.version") + render.__version__,
                 details=__version__,
                 small_image=random.choice(self.RPC_names),
                 large_image="winter",
                 buttons=[
                     {
-                        "label": "Visit Mineshaft Website",
+                        "label": _("rpc.buttons.visit"),
                         "url": "https://github.com/mineshaft-game",
                     }
                 ],
@@ -320,7 +324,7 @@ class Mineshaft:
         pygame.init()  # initialize pygame
         logging.info("pygame initialization is sucessful")
         pygame.display.set_caption(
-            _("Mineshaft"), _("Mineshaft")
+            _("menu.game.name"), _("menu.game.name")
         )  # the display caption
 
         # FIXME: It is still visible in pygame-menu
@@ -437,30 +441,6 @@ class Mineshaft:
             pygame.display.flip()
             self.clock.tick(60)
 
-    @staticmethod
-    def _lang_init():  # initialize translations
-        """Initialize the language loader"""
-        global lang_broken, _
-
-        for language in translations:
-            if os.path.exists(translations[language]):
-                lang.add(translations[language])
-                logging.info(f"Load {language} translation")
-
-            else:
-                logging.warning(
-                    f"Translation for {language} not found, setting _ to lang_not_found"
-                )
-                # TODO: Search for translations, and notify the user if they are not found on GUI start
-
-                _ = lang_not_found
-                lang_broken = True
-                break
-
-        # select a translation
-        if not lang_broken:
-            lang.select(translation)
-            logging.info(f"{translation.title()} translation is selected")
 
     def _menu_init(self, width, height):
         """Initialize the menu"""
@@ -481,7 +461,7 @@ class Mineshaft:
 
         # add buttons
         self.menu.add.button(
-            _("Start Game"),
+            _("menu.main.start"),
             self._menu_singleplayer,
             font_name=minecraftfont,
             font_size=font_size,
@@ -490,7 +470,7 @@ class Mineshaft:
         )
 
         self.menu.add.button(
-            _("Settings"),
+            _("menu.main.settings"),
             self.settings_submenu,
             font_name=minecraftfont,
             font_size=font_size,
@@ -498,7 +478,7 @@ class Mineshaft:
         )
 
         self.menu.add.button(
-            _("Quit"),
+            _("menu.main.quit"),
             pygame_menu.events.EXIT,
             font_name=minecraftfont,
             font_size=font_size,
@@ -572,7 +552,7 @@ class Mineshaft:
         self._submenu_settings_display_init(width, height)
 
         self.settings_submenu.add.button(
-            "Display",
+            _("menu.settings.display"),
             self.settings_submenu_display,
             font_name=minecraftfont,
             font_size=font_size,
@@ -581,7 +561,7 @@ class Mineshaft:
             align=pygame_menu.locals.ALIGN_LEFT,
         )
         self.settings_submenu.add.button(
-            "Back",
+            _("menu.settings.back"),
             pygame_menu.events.BACK,
             font_name=minecraftfont,
             font_size=font_size,
@@ -672,7 +652,6 @@ class Mineshaft:
             if not music.get_busy():
                 music.queue_music(random.choice(MENU))
         else:
-            print("e")
             for event in pygame.event.get():
 
                 if event.type == pygame.KEYDOWN:
@@ -708,7 +687,7 @@ class Mineshaft:
 
         if self.show_fps:
             fps_text = pygame.font.Font(minecraftfont, 50).render(
-                "FPS: " + self.fps, 1, (255, 255, 255)
+                _("debug.fps")  + self.fps, 1, (255, 255, 255)
             )
             self.screen.blit(fps_text, (0, 0))
 
