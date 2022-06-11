@@ -54,6 +54,7 @@ import time  # Getting the exact timestamp
 import random  # used for randomizing things
 import traceback
 import argparse
+import pathlib
 import pynbt
 
 starttime = datetime.datetime.now()  # approximately the time the program started
@@ -139,7 +140,7 @@ WIDTH = int(config["width"].value)
 
 args_parser = argparse.ArgumentParser(description='Mineshaft CLI interface for specifying options through the launcher.')
 
-args_parser.add_argument('--assets', type=str)
+args_parser.add_argument('--assets', type=pathlib.Path)
 
 args = args_parser.parse_args()
 
@@ -257,7 +258,7 @@ class Mineshaft:
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
         self.blocks_sheet = pygame.image.load(
-            os.path.join("assets", "textures", "terrain.png")
+            os.path.join(assets_dir, "textures","terrain.png")
         )
         pygame.display.set_icon(  # set the icon
             pygame.transform.scale(
@@ -340,11 +341,11 @@ class Mineshaft:
         self.soundengine = pygame_menu.sound.Sound()
         self.soundengine.set_sound(
             pygame_menu.sound.SOUND_TYPE_CLICK_MOUSE,
-            os.path.join("assets", "audio", "sound", "menu", "click.ogg"),
+            os.path.join(assets_dir, "audio", "sound", "menu", "click.ogg"),
         )
         self.soundengine.set_sound(
             pygame_menu.sound.SOUND_TYPE_ERROR,
-            os.path.join("assets", "audio", "sound", "menu", "error.ogg"),
+            os.path.join(assets_dir, "audio", "sound", "menu", "error.ogg"),
         )
 
     def show_df_intro(self):
@@ -357,8 +358,8 @@ class Mineshaft:
 
         introended = False
 
-        df1 = pygame.image.load(os.path.join("assets", "logo", "df-1.png"))
-        df2 = pygame.image.load(os.path.join("assets", "logo", "df-2.png"))
+        df1 = pygame.image.load(os.path.join(assets_dir,  "logo", "df-1.png"))
+        df2 = pygame.image.load(os.path.join(assets_dir, "logo", "df-2.png"))
         logging.debug("Load Double Fractal title screen images")
 
         df1_pos = -105
@@ -405,7 +406,7 @@ class Mineshaft:
         FREEZE_TIME = 60
 
         lusteria_img = pygame.transform.scale(
-            pygame.image.load(os.path.join("assets", "logo", "racuniverse.png")),
+            pygame.image.load(os.path.join(assets_dir, "logo", "racuniverse.png")),
             (600, 600),
         )
 
@@ -456,14 +457,14 @@ class Mineshaft:
 
         # set up title
         # TODO: Make the label and buttons resize with menu
-        self.menu.add.image(os.path.join("assets", "logo", "mineshaft.png"))
+        self.menu.add.image(os.path.join(assets_dir, "logo", "mineshaft.png"))
         logging.debug("Add title label")
 
         # add buttons
         self.menu.add.button(
             _("menu.main.start"),
             self._menu_singleplayer,
-            font_name=minecraftfont,
+            font_name=os.path.join(assets_dir,  minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -472,7 +473,7 @@ class Mineshaft:
         self.menu.add.button(
             _("menu.main.settings"),
             self.settings_submenu,
-            font_name=minecraftfont,
+            font_name=os.path.join(assets_dir,  minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
         )
@@ -480,7 +481,7 @@ class Mineshaft:
         self.menu.add.button(
             _("menu.main.quit"),
             pygame_menu.events.EXIT,
-            font_name=minecraftfont,
+            font_name=os.path.join(assets_dir,  minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -495,7 +496,7 @@ class Mineshaft:
 
         # set up the panorama
         self.menu.background = pygame.image.load(
-            os.path.join("assets", "panorama.jpeg")
+            os.path.join(assets_dir, "panorama.jpeg")
         )
         logging.debug("Load panorama")
         self.menu.background = pygame.transform.scale(
@@ -503,7 +504,7 @@ class Mineshaft:
         )
         logging.debug("Resize panorama")
 
-        music.load_music(random.choice(MENU))
+        music.load_music(os.path.join(assets_dir, random.choice(MENU)))
         music.play_music()
 
     def _update_panorama(self, currentpos):
@@ -554,7 +555,7 @@ class Mineshaft:
         self.settings_submenu.add.button(
             _("menu.settings.display"),
             self.settings_submenu_display,
-            font_name=minecraftfont,
+            font_name=os.path.join(assets_dir,  minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -563,7 +564,7 @@ class Mineshaft:
         self.settings_submenu.add.button(
             _("menu.settings.back"),
             pygame_menu.events.BACK,
-            font_name=minecraftfont,
+            font_name=os.path.join(assets_dir,  minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -595,7 +596,7 @@ class Mineshaft:
             value_format=lambda x: fps_discrete_range[x],
             width=500,
             font_color=(0, 0, 0),
-            font_name=minecraftfont,
+            font_name=os.path.join(assets_dir,  minecraftfont),
             font_size=font_size,
             range_text_value_tick_color=WHITE,
             slider_text_value_color=WHITE,
@@ -606,7 +607,7 @@ class Mineshaft:
         self.settings_submenu_display.add.button(
             "Back",
             pygame_menu.events.BACK,
-            font_name=minecraftfont,
+            font_name=os.path.join(assets_dir,  minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -686,7 +687,7 @@ class Mineshaft:
             self.engine.render(self.screen, self.world, pos=self.position)
 
         if self.show_fps:
-            fps_text = pygame.font.Font(minecraftfont, 50).render(
+            fps_text = pygame.font.Font(os.path.join(assets_dir,  minecraftfont), 50).render(
                 _("debug.fps")  + self.fps, 1, (255, 255, 255)
             )
             self.screen.blit(fps_text, (0, 0))

@@ -2,7 +2,7 @@ import os
 
 
 def join_muspath(name: str):
-    return os.path.join("assets", "audio", "music", name)
+    return os.path.join("audio", "music", name)
 
 
 menu1 = join_muspath("menu1.ogg")
