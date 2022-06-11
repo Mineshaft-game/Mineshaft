@@ -138,9 +138,11 @@ logging.info(
 HEIGHT = int(config["height"].value)
 WIDTH = int(config["width"].value)
 
-args_parser = argparse.ArgumentParser(description='Mineshaft CLI interface for specifying options through the launcher.')
+args_parser = argparse.ArgumentParser(
+    description="Mineshaft CLI interface for specifying options through the launcher."
+)
 
-args_parser.add_argument('--assets', type=pathlib.Path)
+args_parser.add_argument("--assets", type=pathlib.Path)
 
 args = args_parser.parse_args()
 
@@ -175,8 +177,9 @@ logging.info("Imported pygame")
 
 
 # import screeninfo # Temporarily unused
-import tools.lang as lang # used for translations
-lang.i18n.load_path.append(os.path.join(assets_dir,  "lang"))
+import tools.lang as lang  # used for translations
+
+lang.i18n.load_path.append(os.path.join(assets_dir, "lang"))
 _ = lang.i18n.t
 
 import pygame_menu  # used for menu
@@ -209,8 +212,6 @@ logging.info("imported index")
 import pypresence
 
 logging.info("Imported pypresence")
-
-
 
 
 BLACK = (0, 0, 0)
@@ -258,7 +259,7 @@ class Mineshaft:
         self.clock = pygame.time.Clock()  # useful for FPS
         logging.info("FPS counter is created")
         self.blocks_sheet = pygame.image.load(
-            os.path.join(assets_dir, "textures","terrain.png")
+            os.path.join(assets_dir, "textures", "terrain.png")
         )
         pygame.display.set_icon(  # set the icon
             pygame.transform.scale(
@@ -358,7 +359,7 @@ class Mineshaft:
 
         introended = False
 
-        df1 = pygame.image.load(os.path.join(assets_dir,  "logo", "df-1.png"))
+        df1 = pygame.image.load(os.path.join(assets_dir, "logo", "df-1.png"))
         df2 = pygame.image.load(os.path.join(assets_dir, "logo", "df-2.png"))
         logging.debug("Load Double Fractal title screen images")
 
@@ -442,7 +443,6 @@ class Mineshaft:
             pygame.display.flip()
             self.clock.tick(60)
 
-
     def _menu_init(self, width, height):
         """Initialize the menu"""
         self.menu = pygame_menu.Menu(  # set up the menu
@@ -464,7 +464,7 @@ class Mineshaft:
         self.menu.add.button(
             _("menu.main.start"),
             self._menu_singleplayer,
-            font_name=os.path.join(assets_dir,  minecraftfont),
+            font_name=os.path.join(assets_dir, minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -473,7 +473,7 @@ class Mineshaft:
         self.menu.add.button(
             _("menu.main.settings"),
             self.settings_submenu,
-            font_name=os.path.join(assets_dir,  minecraftfont),
+            font_name=os.path.join(assets_dir, minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
         )
@@ -481,7 +481,7 @@ class Mineshaft:
         self.menu.add.button(
             _("menu.main.quit"),
             pygame_menu.events.EXIT,
-            font_name=os.path.join(assets_dir,  minecraftfont),
+            font_name=os.path.join(assets_dir, minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -555,7 +555,7 @@ class Mineshaft:
         self.settings_submenu.add.button(
             _("menu.settings.display"),
             self.settings_submenu_display,
-            font_name=os.path.join(assets_dir,  minecraftfont),
+            font_name=os.path.join(assets_dir, minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -564,7 +564,7 @@ class Mineshaft:
         self.settings_submenu.add.button(
             _("menu.settings.back"),
             pygame_menu.events.BACK,
-            font_name=os.path.join(assets_dir,  minecraftfont),
+            font_name=os.path.join(assets_dir, minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -596,7 +596,7 @@ class Mineshaft:
             value_format=lambda x: fps_discrete_range[x],
             width=500,
             font_color=(0, 0, 0),
-            font_name=os.path.join(assets_dir,  minecraftfont),
+            font_name=os.path.join(assets_dir, minecraftfont),
             font_size=font_size,
             range_text_value_tick_color=WHITE,
             slider_text_value_color=WHITE,
@@ -607,7 +607,7 @@ class Mineshaft:
         self.settings_submenu_display.add.button(
             "Back",
             pygame_menu.events.BACK,
-            font_name=os.path.join(assets_dir,  minecraftfont),
+            font_name=os.path.join(assets_dir, minecraftfont),
             font_size=font_size,
             font_color=(255, 255, 255),
             font_shadow_color=(255, 255, 255),
@@ -687,9 +687,9 @@ class Mineshaft:
             self.engine.render(self.screen, self.world, pos=self.position)
 
         if self.show_fps:
-            fps_text = pygame.font.Font(os.path.join(assets_dir,  minecraftfont), 50).render(
-                _("debug.fps")  + self.fps, 1, (255, 255, 255)
-            )
+            fps_text = pygame.font.Font(
+                os.path.join(assets_dir, minecraftfont), 50
+            ).render(_("debug.fps") + self.fps, 1, (255, 255, 255))
             self.screen.blit(fps_text, (0, 0))
 
         pygame.display.flip()  # fllip the display to show the changes
